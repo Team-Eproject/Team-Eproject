@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
     username = models.CharField(max_length=50, unique=True,verbose_name="name")
-    email = models.EmailField(unique=True) # 要らないなら消す
+    # email = models.EmailField(unique=True) 
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
