@@ -74,6 +74,8 @@ DATABASES = {
     }
 }
 
+AUTH_USER_MODELS = 'users.User'
+
 # パスワード
 AUTH_PASSWORD_VALIDATORS = []
 
