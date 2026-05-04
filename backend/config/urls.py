@@ -1,7 +1,9 @@
-from django.urls import path
-from .views import LoginView, FoodListView
+from django.contrib import admin
+from django.urls import path, include
 
 urlpatterns = [
-    path("login/", LoginView.as_view()),
-    path("foods/", FoodListView.as_view()),
+    path("admin/", admin.site.urls),
+
+    path("api/", include("apps.users.urls")),
+    path("api/", include("apps.foods.urls")),
 ]
