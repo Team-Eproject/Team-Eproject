@@ -21,7 +21,7 @@ class LoginView(APIView):
         )
 
 # ログアウトAPI
-class LogoutView(APIview):
+class LogoutView(APIView):
     def post(self, request):
         logout(request)
         return Response({"message": "ログアウトしました"})
