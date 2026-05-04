@@ -26,9 +26,7 @@ INSTALLED_APPS = [
     # 自作
     "apps.users",
     "apps.foods",
-    "apps.categories",
     "apps.shopping_memos",
-    "apps.favorite_foods",
 ]
 
 # ミドルウェア
