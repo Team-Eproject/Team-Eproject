@@ -6,6 +6,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # 基本設定
 SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret-key")
 
+# settings.py
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
 DEBUG = os.getenv("DEBUG", "1") == "1"
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
