@@ -6,6 +6,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # 基本設定
 SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret-key")
 
+# settings.py
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
 DEBUG = os.getenv("DEBUG", "1") == "1"
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
@@ -18,13 +21,12 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    'rest_framework',
 
     # 自作
     "apps.users",
     "apps.foods",
-    "apps.categories",
     "apps.shopping_memos",
-    "apps.favorite_foods",
 ]
 
 # ミドルウェア
@@ -74,6 +76,8 @@ DATABASES = {
     }
 }
 
+AUTH_USER_MODEL = 'users.User'
+
 # パスワード
 AUTH_PASSWORD_VALIDATORS = []
 
@@ -92,3 +96,9 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+}
