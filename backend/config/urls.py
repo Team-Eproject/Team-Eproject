@@ -1,9 +1,14 @@
+from django.contrib import admin
 from django.urls import path, include
-from django.views.generic immport CreateView
 from django.views.generic import CreateView
-from .views import HomeView
+from django.contrib.auth.forms import UserCreationForm
+# from .views import HomeView
 
 urlpatterns = [
+    path("admin/", admin.site.urls),
+
+    path("api/", include("apps.users.urls")),
+    path("api/", include("apps.foods.urls")),
     path("api/users/", include("apps.users.urls")),
 
 #新規登録ページの作成
@@ -13,8 +18,9 @@ urlpatterns = [
         success_url='/foods',
     ), name='signup'),
 
-    path('home/' HomeView.as_view(
+    path('home/', HomeView.as_view(
         template_name='',
     ),
      name='home'),
+
 ]
