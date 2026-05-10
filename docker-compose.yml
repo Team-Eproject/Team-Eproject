@@ -2,34 +2,54 @@ services:
   db:
     image: mysql:8.0
     container_name: db
-    restart: always
-    env_file:
-      - .env
-    command: --default-authentication-plugin=mysql_native_password
-    ports:
-      - "3307:3306"
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    command: ["mysqld", "--character-set-server=utf8mb4", "--collation-server=utf8mb4_0900_ai_ci"]
     volumes:
       - db_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 5s
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 10s
       timeout: 5s
       retries: 10
 
+<<<<<<< HEAD
   backend:
     build: .
     container_name: backend
     working_dir: /app
     entrypoint: /app/entrypoint.sh
-    volumes:
-      - ./backend:/app
-    ports:
-      - "8000:8000"
+=======
+  web:
+    build:
+      context: ./backend
+      dockerfile: Docker/Dockerfile
+    container_name: web
     depends_on:
       db:
         condition: service_healthy
     env_file:
       - .env
+>>>>>>> 18e27a8a3443da8a9e46d01aad93fb44879ce0b2
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+<<<<<<< HEAD
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - .env
+=======
+    restart: unless-stopped
+>>>>>>> 18e27a8a3443da8a9e46d01aad93fb44879ce0b2
     environment:
       - DJANGO_SETTINGS_MODULE=config.settings
 
