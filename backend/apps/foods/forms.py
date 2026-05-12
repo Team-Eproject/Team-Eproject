@@ -9,13 +9,12 @@ class FoodForm(forms.ModelForm):
 
     class Meta:
         model = Food
-        fielsd = [
-            "pre_food",
+        fields = [
             "name",
             "image",
             "quantity",
             "expiration_date",
-            "no_expiration",
+            "no_expiration_date",
             "category",
             "custom_category",
         ]

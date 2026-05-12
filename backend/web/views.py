@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from apps.foods.forms import FoodForm
 
 def top(request):
     return render(request, "top.html")
@@ -11,3 +12,13 @@ def login(request):
 
 def main(request):
     return render(request, "main.html")
+
+#def foods(request):
+
+    form = FoodForm()
+
+    return render(
+        request,
+        "foods/food_form.html",
+        {"form": form}
+    )

@@ -7,3 +7,4 @@ sqlparse==0.5.3
 typing_extensions==4.15.0
 Jinja2==3.1.4
 djangorestframework
+pillow==12.2.0

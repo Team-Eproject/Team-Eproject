@@ -1,7 +1,8 @@
 from django.views.generic import CreateView
 from django.urls import reverse_lazy
 from rest_framework.generics import ListAPIView
-from .models import Food, Category
+
+from .models import Food, PreFood
 from .forms import FoodForm
 from .serializers import FoodSerializer
 
@@ -12,14 +13,14 @@ class FoodListView(ListAPIView):
 class FoodCreateView(CreateView):
     model = Food
     form_class =FoodForm
-    template_name = ".html"
-    success_url = reverse_lazy("foods:entry")
+    template_name = "foods/food_form.html"
+    success_url = reverse_lazy("foods:food-entry")
 
     def form_valid(self, form):
         custom_category = form.cleaned_data.get("custom_category")
 
         if custom_category:
-            category, created = Category.objects.get_or_create(
+            category, created = PreFood.objects.get_or_create(
                 name=custom_category
             )
             form.instance.category = category
