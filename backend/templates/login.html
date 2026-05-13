@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>飯蔵 - ログイン</title>
+
+  <!-- Material Symbols by Google -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined">
+
+  <!-- <link rel="stylesheet" href="../static/css/style.css"> -->
+  <link rel="stylesheet" href="{{ static('css/style.css') }}">
+</head>
+<body>
+  <header class="app-header">
+    <!-- login.html：戻るナビゲーション -->
+    <a href="{{ url('top') }}" class="back-link">
+      <span class="material-symbols-outlined back-icon">arrow_back</span>
+      <span class="back-text">トップへもどる</span>
+    </a>
+  </header>
+
+  <main class="form-page page-frame">
+
+    <!-- login.html：アイコンと見出しエリア -->
+    <section class="login-title-area">
+      <!-- <img src="../static/img/login-icon.png" alt="冷蔵庫アイコン" class="login-icon"> -->
+
+      <img src="{{ static( 'img/login-icon.png' ) }}" alt="冷蔵庫アイコン" class="login-icon">
+
+      <p class="sub-title">
+        冷蔵庫の管理は<br>
+        お任せください！
+      </p>
+    </section>
+
+    <!-- login.html：入力フォーム -->
+    <form action="#" method="post" class="form-area">
+      <label class="form-label" for="login-name">お名前</label>
+      <input id="login-name" name="name" type="text" class="form-input">
+
+      <label class="form-label" for="login-password">パスワード</label>
+      <input id="login-password" name="password" type="password" class="form-input">
+
+      <a href="{{ url('signup') }}" class="form-guide-signup">
+        初めての方は冷蔵庫を登録してください
+      </a>
+
+      <button type="submit" class="button button-primary form-button wide-button">
+        冷蔵庫を開く
+      </button>
+    </form>
+
+  </main>
+
+  <!-- login.html：下部の水色背景 -->
+  <footer class="bottom-bar"></footer>
+</body>
+</html>
