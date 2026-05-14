@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import CreateView
 from django.contrib.auth.forms import UserCreationForm
-# from .views import HomeView
+from .views import HomeView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
