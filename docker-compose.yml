@@ -18,6 +18,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 10
+    env_file:
+      - .env  
 
   backend:
     build: 
@@ -26,6 +28,10 @@ services:
     container_name: backend
     working_dir: /app
     entrypoint: /app/entrypoint.sh
+
+    env_file:
+      - .env
+
   web:
     build:
       context: ./backend
