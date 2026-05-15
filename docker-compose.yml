@@ -22,21 +22,10 @@ services:
       - .env  
 
   backend:
-    build: 
+    build:
       context: .
       dockerfile: backend/Dockerfile
     container_name: backend
-    working_dir: /app
-    entrypoint: /app/entrypoint.sh
-
-    env_file:
-      - .env
-
-  web:
-    build:
-      context: ./backend
-      dockerfile: Docker/Dockerfile
-    container_name: web
     depends_on:
       db:
         condition: service_healthy
