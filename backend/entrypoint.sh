@@ -2,18 +2,17 @@
 
 echo "Waiting for DB..."
 
+# ポート開くまで待つ
 while ! nc -z db 3306; do
   sleep 2
 done
 
-echo "Port is open, waiting for MySQL..."
+echo "MySQL port is open"
 
-while ! python manage.py shell -c "from django.db import connections; connections['default'].cursor()" 2>/dev/null; do
-  echo "DB not ready..."
-  sleep 2
-done
+# ちょい待つ（←これ超重要）
+sleep 5
 
-echo "DB is ready"
+echo "Running migrations..."
 
 python manage.py migrate --noinput
 
