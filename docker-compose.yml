@@ -21,11 +21,11 @@ services:
     env_file:
       - .env  
 
-  backend:
+  web:
     build:
-      context: .
-      dockerfile: backend/Dockerfile
-    container_name: backend
+      context: ./backend
+      dockerfile: Docker/Dockerfile
+    container_name: web
     depends_on:
       db:
         condition: service_healthy
