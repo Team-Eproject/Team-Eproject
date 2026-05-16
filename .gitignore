@@ -1,86 +1,47 @@
-Django用の一般的な .gitignore
-
-# Python bytecode
+# ======================
+# Python
+# ======================
 __pycache__/
-*.py[cod]
-*$py.class
+*.pyc
+*.pyo
+*.pyd
 
-# C extensions
-*.so
-
-# Distribution / packaging
-build/
-dist/
-*.egg-info/
-.eggs/
-
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
-
-# Virtual environments
-env/
-venv/
-ENV/
-.venv/
-
-# Pyenv
-.python-version
-
-# IDE / editor
-.vscode/
-.idea/
-*.sublime-project
-*.sublime-workspace
-
-# OS files
-.DS_Store
-Thumbs.db
-ehthumbs.db
-Desktop.ini
-
-# Django / project specific
-*.log
-local_settings.py
+# ======================
+# Django
+# ======================
 db.sqlite3
-db.sqlite3-journal
+*.log
+staticfiles/
 media/
-staticfiles/    
-#collectstatic 出力先（必要に応じて除外）
-# 静的ファイルのビルド成果物（例: Webpack）
-node_modules/
-npm-debug.log*
-yarn-error.log
 
-# Environment variables
+# ======================
+# Environment
+# ======================
 .env
 .env.*
 
-# Testing / coverage
-.coverage
-.coverage.*
-htmlcov/
-.tox/
-.nox/
-.pytest_cache/
-nosetests.xml
-coverage.xml
-*.cover
-.hypothesis/
+# ======================
+# VSCode
+# ======================
+.vscode/
 
-# Celery
-celerybeat-schedule
-celerybeat.pid
+# ======================
+# Mac
+# ======================
+.DS_Store
 
-# Sphinx
-docs/_build/
+# ======================
+# Docker
+# ======================
+*.pid
+*.sock
 
-# Misc
-*.pot
-*.mo
-*.log.*
-*.sqlite3
-._*
+# ======================
+# MySQL (ローカルファイル使う場合)
+# ======================
+db_data/
 
-templates_tmp
-.env_example
+# ======================
+# その他
+# ======================
+*.swp
