@@ -10,6 +10,8 @@
 
   <!-- <link rel="stylesheet" href="../static/css/style.css"> -->
   <link rel="stylesheet" href="{{ static('css/style.css') }}">
+  <!-- js読み込み -->
+  <script src="{{ static('js/signup.js') }}" defer></script>
 </head>
 <body>
   <header class="app-header">
@@ -36,20 +38,43 @@
     </section>
 
     <!-- signup.html：入力フォーム -->
-    <form action="#" method="post" class="form-area">
-      <label class="form-label" for="signup-name">お名前</label>
-      <input id="signup-name" name="name" type="text" class="form-input">
+    <form 
+    action="#" 
+    method="post" 
+    class="form-area" 
+    id="signup-form">
 
-      <label class="form-label" for="signup-password">パスワード</label>
-      <input id="signup-password" name="password" type="password" class="form-input">
+      <label 
+      class="form-label" 
+      for="username">お名前</label>
+
+      <input 
+      id="username" 
+      name="username" 
+      type="text" 
+      class="form-input"
+      required
+      >
+
+      <label 
+      class="form-label" for="password">パスワード</label>
+      <input 
+      id="password" 
+      name="password" 
+      type="password" 
+      class="form-input"
+      required
+      >
 
       <a href="{{ url('login') }}" class="form-guide-login">
         すでに冷蔵庫を登録している方はこちら
       </a>
 
-      <button type="submit" class="button button-primary form-button">
+      <button type="submit" 
+      class="button button-primary form-button">
         登録
       </button>
+      <p id="signup-message"></p>
     </form>
 
   </main>
