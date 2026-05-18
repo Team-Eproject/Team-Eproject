@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>飯蔵 - 新規登録</title>
+
+  <!-- Material Symbols by Google -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined">
+
+  <!-- <link rel="stylesheet" href="../static/css/style.css"> -->
+  <link rel="stylesheet" href="{{ static('css/style.css') }}">
+  <!-- js読み込み -->
+  <script src="{{ static('js/signup.js') }}" defer></script>
+</head>
+<body>
+  <header class="app-header">
+    <!-- signup.html：戻るナビゲーション -->
+    <a href="{{ url('top') }}" class="back-link">
+      <span class="material-symbols-outlined back-icon">arrow_back</span>
+      <span class="back-text">トップへもどる</span>
+    </a>
+  </header>
+
+  <main class="form-page page-frame">
+
+    <!-- signup.html：見出しエリア -->
+    <section class="form-title-area">
+      <h1 class="main-title">はじめまして！</h1>
+      <p class="sub-title">
+        冷蔵庫の管理は<br>
+        お任せください！
+      </p>
+      <p class="description-text">
+        あなただけの冷蔵庫を作成します！<br>
+        情報を入力してください
+      </p>
+    </section>
+
+    <!-- signup.html：入力フォーム -->
+    <form 
+    action="#" 
+    method="post" 
+    class="form-area" 
+    id="signup-form">
+
+      <label 
+      class="form-label" 
+      for="username">お名前</label>
+
+      <input 
+      id="username" 
+      name="username" 
+      type="text" 
+      class="form-input"
+      required
+      >
+
+      <label 
+      class="form-label" for="password">パスワード</label>
+      <input 
+      id="password" 
+      name="password" 
+      type="password" 
+      class="form-input"
+      required
+      >
+
+      <a href="{{ url('login') }}" class="form-guide-login">
+        すでに冷蔵庫を登録している方はこちら
+      </a>
+
+      <button type="submit" 
+      class="button button-primary form-button">
+        登録
+      </button>
+      <p id="signup-message"></p>
+    </form>
+
+  </main>
+
+  <!-- signup.html：下部の水色背景 -->
+  <footer class="bottom-bar"></footer>
+</body>
+</html>

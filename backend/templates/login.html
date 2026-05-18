@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>飯蔵 - ログイン</title>
+
+  <!-- Material Symbols by Google -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined">
+
+  <!-- <link rel="stylesheet" href="../static/css/style.css"> -->
+  <link rel="stylesheet" href="{{ static('css/style.css') }}">
+  <!-- js読み込み -->
+  <script src="{{ static('js/login.js') }}" defer></script>
+</head>
+<body>
+  <header class="app-header">
+    <!-- login.html：戻るナビゲーション -->
+    <a href="{{ url('top') }}" class="back-link">
+      <span class="material-symbols-outlined back-icon">arrow_back</span>
+      <span class="back-text">トップへもどる</span>
+    </a>
+  </header>
+
+  <main class="form-page page-frame">
+
+    <!-- login.html：アイコンと見出しエリア -->
+    <section class="login-title-area">
+      <!-- <img src="../static/img/login-icon.png" alt="冷蔵庫アイコン" class="login-icon"> -->
+
+      <img src="{{ static( 'img/login-icon.png' ) }}" alt="冷蔵庫アイコン" class="login-icon">
+
+      <p class="sub-title">
+        冷蔵庫の管理は<br>
+        お任せください！
+      </p>
+    </section>
+
+    <!-- login.html：入力フォーム -->
+    <form 
+    action="#" 
+    method="post" 
+    class="form-area"
+    id="login-form"
+    >
+      <label 
+      class="form-label" 
+      for="username">お名前</label>
+      <input 
+      id="username" 
+      name="username" 
+      type="text" 
+      class="form-input"
+      required
+      >
+
+      <label 
+      class="form-label" 
+      for="password">パスワード</label>
+      <input 
+      id="password" 
+      name="password" 
+      type="password" 
+      class="form-input"
+      required
+      >
+
+      <a href="{{ url('signup') }}" class="form-guide-signup">
+        初めての方は冷蔵庫を登録してください
+      </a>
+
+      <button 
+      type="submit" 
+      class="button button-primary form-button wide-button">
+        冷蔵庫を開く
+      </button>
+    </form>
+    <p id="login-message"></p>
+
+  </main>
+
+  <!-- login.html：下部の水色背景 -->
+  <footer class="bottom-bar"></footer>
+</body>
+</html>

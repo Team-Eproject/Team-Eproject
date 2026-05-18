@@ -1,13 +1,43 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <title>Team-Eproject</title>
-    <link rel="stylesheet" href="{{ static('css/sample.css') }}">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>飯蔵 - トップ</title>
+
+<!-- Material Symbols by Google -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined">
+
+<!-- <link rel="stylesheet" href="../static/css/style.css"> -->
+<link rel="stylesheet" href="{{ static('css/style.css') }}">
+
 </head>
 <body>
-    <h1>Django + Jinja2 起動成功！</h1>
+<main class="top-page page-frame">
 
-    <a href="{{ url('login') }}">ログインページへ</a>
+    <!-- top.html：ロゴ表示エリア -->
+    <section class="top-logo-area">
+    <!-- <img src="../static/img/top-logo.png" alt="飯蔵ロゴ" class="top-logo"> -->
+    <img src="{{ static('img/top-logo.png') }}" alt="飯蔵ロゴ" class="top-logo">
+    </section>
+
+    <!-- top.html：冷蔵庫を開くボタン -->
+    <section class="top-button-area top-button-area-first">
+    <a href="{{ url('login') }}" class="button button-primary">
+        冷蔵庫を開く
+    </a>
+    </section>
+
+    <!-- top.html：新規利用開始ボタン -->
+    <section class="top-button-area">
+    <a href="{{ url('signup') }}" class="button button-danger">
+        始めて使う
+    </a>
+    </section>
+
+</main>
+
+<!-- top.html：下部の水色背景 -->
+<footer class="bottom-bar"></footer>
 </body>
 </html>

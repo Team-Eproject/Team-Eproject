@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.views.decorators.csrf import ensure_csrf_cookie
 
 def top(request):
     return render(request, "top.html")
@@ -11,3 +12,12 @@ def login(request):
 
 def main(request):
     return render(request, "main.html")
+
+# CSRFトークンを送るのに必要なCSRF Cookieを発行する処理
+@ensure_csrf_cookie
+def signup_view(request):
+    return render(request, "signup.html")
+
+@ensure_csrf_cookie
+def login_view(request):
+    return render(request, "login.html")

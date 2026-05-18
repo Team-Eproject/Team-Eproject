@@ -1,0 +1,441 @@
+/* ========================================
+  共通設定：全ページ
+======================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  margin: 0;
+  background-color: #d9d9d9;
+  color: #000000;
+  font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  border: none;
+  cursor: pointer;
+}
+
+/* ========================================
+  共通設定：ページ幅
+======================================== */
+
+.page-frame {
+  width: 100%;
+  max-width: 768px;
+  margin: 0 auto;
+  background-color: #f5f5f5;
+}
+
+/* ========================================
+  共通設定：ボタン
+======================================== */
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 78%;
+  max-width: 620px;
+  min-height: 92px;
+  margin: 0 auto;
+  color: #ffffff;
+  font-size: 2.2rem;
+  letter-spacing: 0.08em;
+}
+
+.button-primary {
+  background-color: #58b0d4;
+}
+
+.button-primary:hover{
+  opacity: 90%;
+}
+
+.button-danger {
+  background-color: #d45454;
+}
+
+.button-danger:hover {
+  opacity: 90%;
+}
+
+/* ========================================
+  共通設定：下部バー
+======================================== */
+
+.bottom-bar {
+  width: 100%;
+  max-width: 768px;
+  height: 170px;
+  margin: 0 auto;
+  background-color: #a5c5d5;
+}
+
+/* ========================================
+  共通設定：ヘッダー
+  signup.html / login.html
+======================================== */
+
+.app-header {
+  width: 100%;
+  max-width: 768px;
+  height: 165px;
+  margin: 0 auto;
+  background-color: #005f86;
+  color: #ffffff;
+}
+
+.back-link {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: 220px;
+  height: 100%;
+  padding-left: 52px;
+}
+
+.back-icon {
+  font-size: 5.8rem;
+  line-height: 1;
+}
+
+.back-text {
+  margin-top: 8px;
+  font-size: 1.1rem;
+  letter-spacing: 0.18em;
+}
+
+/* ========================================
+  top.html：トップページ
+======================================== */
+
+.top-page {
+  min-height: 1330px;
+}
+
+.top-logo-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 760px;
+  padding: 70px 40px 40px;
+  border-bottom: 5px solid #d9d9d9;
+}
+
+/* トップ画像 */
+.top-logo {
+  width: 100%;
+  max-width: 1200px;
+  height: auto;
+}
+
+.top-button-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 260px;
+  border-bottom: 5px solid #d9d9d9;
+}
+
+.top-button-area-first {
+  min-height: 260px;
+}
+
+/* ========================================
+  signup.html / login.html：フォームページ共通
+======================================== */
+
+.form-page {
+  min-height: 1230px;
+  padding: 0 44px 80px;
+}
+
+.form-title-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 78px;
+  text-align: center;
+}
+
+.login-title-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 76px;
+  text-align: center;
+}
+
+.main-title {
+  margin: 0;
+  color: #015483;
+  font-size: 4.9rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+.sub-title {
+  margin: 42px 0 0;
+  color: #54b0d4;
+  font-size: 3.3rem;
+  line-height: 1.35;
+  letter-spacing: 0.08em;
+}
+
+.description-text {
+  margin: 56px 0 0;
+  color: #003d5c;
+  font-size: 2.05rem;
+  font-weight: 700;
+  line-height: 1.45;
+  letter-spacing: 0.05em;
+}
+
+.login-icon {
+  width: 250px;
+  height: auto;
+  margin-bottom: 28px;
+  border-radius: 18px;
+}
+
+.form-area {
+  display: flex;
+  flex-direction: column;
+  margin-top: 70px;
+}
+
+.form-label {
+  margin-bottom: 18px;
+  color: #000000;
+  font-size: 2.4rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.form-input {
+  width: 100%;
+  height: 98px;
+  margin-bottom: 46px;
+  padding: 0 24px;
+  border: 4px solid #aaaaaa;
+  background-color: #ffffff;
+  font-size: 2rem;
+}
+
+.form-guide-login, 
+.form-guide-signup {
+  margin: 58px 0 54px;
+  color: #000000;
+  font-size: 2.2rem;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: underline;
+  letter-spacing: 0.02em;
+}
+
+.form-guide-login:hover, 
+.form-guide-signup:hover {
+  color: #54b0d4;
+}
+
+.form-button {
+  width: 46%;
+  min-height: 100px;
+}
+
+.wide-button {
+  width: 86%;
+}
+
+/* ========================================
+  スマホ向け：幅480px以下
+======================================== */
+
+@media screen and (max-width: 480px) {
+  html {
+    font-size: 10px;
+  }
+
+  .page-frame {
+    max-width: 480px;
+  }
+
+  .bottom-bar {
+    max-width: 480px;
+    height: 118px;
+  }
+
+  .button {
+    width: 78%;
+    min-height: 68px;
+    font-size: 2.4rem;
+  }
+
+  .app-header {
+    max-width: 480px;
+    height: 112px;
+  }
+
+  .back-link {
+    width: 150px;
+    padding-left: 30px;
+  }
+
+  .back-icon {
+    font-size: 5.4rem;
+  }
+
+  .back-text {
+    font-size: 1.1rem;
+  }
+
+  .top-page {
+    min-height: 920px;
+  }
+
+  .top-logo-area {
+    min-height: 470px;
+    padding: 44px 24px 24px;
+  }
+
+  .top-logo {
+    width: 76%;
+  }
+
+  .top-button-area {
+    min-height: 170px;
+  }
+
+  .form-page {
+    min-height: 850px;
+    padding: 0 32px 56px;
+  }
+
+  .form-title-area {
+    padding-top: 48px;
+  }
+
+  .login-title-area {
+    padding-top: 42px;
+  }
+
+  .main-title {
+    font-size: 4.8rem;
+  }
+
+  .sub-title {
+    margin-top: 30px;
+    font-size: 3.3rem;
+  }
+
+  .description-text {
+    margin-top: 38px;
+    font-size: 2.3rem;
+  }
+
+  .login-icon {
+    width: 156px;
+    margin-bottom: 22px;
+  }
+
+  .form-area {
+    margin-top: 48px;
+  }
+
+  .form-label {
+    margin-bottom: 12px;
+    font-size: 2.7rem;
+  }
+
+  .form-input {
+    height: 66px;
+    margin-bottom: 30px;
+    padding: 0 16px;
+    border: 3px solid #aaaaaa;
+    font-size: 2rem;
+  }
+
+  .form-guide-login, 
+  .form-guide-signup {
+    margin: 38px 0 36px;
+    font-size: 2.45rem;
+  }
+
+  .form-button {
+    width: 48%;
+    min-height: 72px;
+  }
+
+  .wide-button {
+    width: 88%;
+  }
+}
+
+/* ========================================
+  タブレット向け：481px以上768px以下
+======================================== */
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+
+  .page-frame {
+    max-width: 768px;
+  }
+
+  .bottom-bar {
+    max-width: 768px;
+    height: 150px;
+  }
+
+  .button {
+    width: 78%;
+    min-height: 86px;
+  }
+
+  .app-header {
+    max-width: 768px;
+    height: 150px;
+  }
+
+  .top-page {
+    min-height: 1200px;
+  }
+
+  .top-logo-area {
+    min-height: 670px;
+  }
+
+  .top-button-area {
+    min-height: 230px;
+  }
+
+  .form-page {
+    min-height: 1120px;
+    padding-left: 42px;
+    padding-right: 42px;
+  }
+
+  .form-input {
+    height: 88px;
+  }
+
+  .login-icon {
+    width: 225px;
+  }
+}
