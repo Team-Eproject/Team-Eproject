@@ -1,3 +1,5 @@
+from django.shortcuts import render
+
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.generics import ListAPIView, CreateAPIView
 from .models import Food, PreFood
@@ -19,3 +21,6 @@ class FoodCreateView(CreateAPIView)  :
 class CategoryListView(ListAPIView):
     queryset = PreFood.objects.all()
     serializer_class = PreFoodSerializer
+
+def register_page(request):
+    return render(request, "foods/register,html")
