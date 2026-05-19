@@ -23,4 +23,4 @@ class CategoryListView(ListAPIView):
     serializer_class = PreFoodSerializer
 
 def register_page(request):
-    return render(request, "foods/register,html")
+    return render(request, "foods/register.html", using="django")

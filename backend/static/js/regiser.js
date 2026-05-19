@@ -14,7 +14,7 @@ const newFoodInput =
 async function loadCategories() {
 
     const response = 
-        await fetch("/api/categories");
+        await fetch("/api/foods/categories");
 
     const categories =
         await response.json();
@@ -67,7 +67,7 @@ categorySelect.addEventListener(
         // 食材取得
         const response =
             await fetch(
-                `/api/foods/?category=${categoryID}`
+                `/api/foods/foods/?category=${categoryID}`
         );
 
         const foods =

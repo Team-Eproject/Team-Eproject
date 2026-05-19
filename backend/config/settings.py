@@ -57,6 +57,7 @@ TEMPLATES = [
     },
     {
         # Django管理画面は従来のDjangoテンプレートを使うため残す
+        'NAME': 'django',
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
         'APP_DIRS': True,
