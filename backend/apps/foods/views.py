@@ -1,15 +1,28 @@
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.generics import ListAPIView, CreateAPIView
+from .models import Food, PreFood
+from .serializers import FoodSerializer, PreFoodSerializer
 from django.views.generic import CreateView
 from django.urls import reverse_lazy
-from rest_framework.generics import ListAPIView
-
-from .models import Food, PreFood
 from .forms import FoodForm
-from .serializers import FoodSerializer
+
 
 class FoodListView(ListAPIView):
     queryset = Food.objects.select_related("category").all()
     serializer_class = FoodSerializer
 
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ["category", "name"]
+
+class FoodCreateAPIView(CreateAPIView):
+    queryset = Food.objects.all()
+    serializer_class = FoodSerializer
+
+class CategoryListView(ListAPIView):
+    queryset = PreFood.objects.all()
+    serializer_class = PreFoodSerializer
+
+#HTMLフォーム
 class FoodCreateView(CreateView):
     model = Food
     form_class =FoodForm
@@ -29,3 +42,10 @@ class FoodCreateView(CreateView):
             form.instance.expiration_date = None
 
         return super().form_valid(form)
+
+
+
+
+
+
+

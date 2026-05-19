@@ -1,11 +1,11 @@
 from django.urls import path
-from .views import FoodListView, FoodCreateView
-from .models import PreFood
+from .views import FoodListView, FoodCreateView, CategoryListView, FoodCreateAPIView
 
 
-app_name = "foods"
 
 urlpatterns =  [
-    path("", FoodListView.as_view()),
-    path("entry/", FoodCreateView.as_view(), name="food-entry"),
+    path("foods/", FoodListView.as_view()),
+    path("foods/create/", FoodCreateAPIView.as_view()),
+    path("foods/categories/", CategoryListView.as_view()),
+    path("foods/entry/", FoodCreateView.as_view(), name="food-entry"),
 ]
