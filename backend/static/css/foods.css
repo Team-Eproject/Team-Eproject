@@ -21,6 +21,9 @@
   text-align: center;
   font-size: 1.8rem;
 }
+.more-button:hover{
+  opacity: 80%;
+}
 .food-card-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -41,6 +44,9 @@
 }
 .food-card-top span:first-child { padding-left: 16px; }
 .delete-button { width: 46%; min-height: 58px; }
+.delete-button:hover{
+  opacity: 80%;
+}
 .food-image-placeholder {
   height: 170px;
   color: var(--color-muted);
@@ -82,7 +88,7 @@
   width: 270px;
   height: 270px;
   color: #ffffff;
-  background: #00859a;
+  background: #007b94;
   border: 10px solid #ffffff;
   border-radius: 50%;
   box-shadow: 12px 14px 22px rgba(0,0,0,0.25);
@@ -90,6 +96,9 @@
   align-items: center;
   justify-content: center;
   font-size: 2.2rem;
+}
+.circle-register-button:hover{
+  opacity: 80%;
 }
 
 /* foodslist.html */

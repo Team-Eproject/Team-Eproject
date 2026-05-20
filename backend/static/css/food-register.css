@@ -1,6 +1,16 @@
 /* =========================================================
   food-register.css : food_register.html / foodlist_detail.html
    ========================================================= */
+
+.register-page{
+  width: 100%;
+  max-width: 1280px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 28px 38px 180px;
+  background: #d9d9d9;
+}
+
 .food-form,
 .detail-page {
   font-size: 2rem;
@@ -21,6 +31,10 @@
 .source-button-favorite {
   background: var(--color-danger);
 }
+.source-button:hover{
+  opacity: 80%;
+}
+
 .form-food-basic,
 .detail-basic {
   display: flex;
@@ -117,6 +131,9 @@
   align-items: center;
   justify-content: center;
   font-size: 2.4rem;
+}
+.submit-button:hover{
+opacity: 80%;
 }
 
 /* jQuery UI Datepicker */
