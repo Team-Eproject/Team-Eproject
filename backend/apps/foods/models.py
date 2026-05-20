@@ -1,6 +1,18 @@
 from django.db import models
+from django.conf import settings
 
-# カテゴリ　(PREFOODS)
+
+#ユーザーの特定
+class UserProfile(models.Model):
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
+        
+    def __str__(self):
+        return self.user.username
+
+# カテゴリ (PREFOODS)
 class PreFood(models.Model):
     name = models.CharField("カテゴリー名", max_length=100)
     
@@ -41,11 +53,19 @@ class Food(models.Model):
         "カテゴリー手入力",
         max_length=50,
         blank=True,
-        )
+    )
+
+    #作成日時
+    created_at = models.DateTimeField(auto_now_add=True)
+    #更新日時
+    updated_at = models.DateTimeField(auto_now=True)
+    #冷蔵庫の特定
+
 
 
     def __str__(self):
         return self.name
+
 
 
     
