@@ -1,0 +1,212 @@
+/* =========================================================
+  food-register.css : food_register.html / foodlist_detail.html
+   ========================================================= */
+.food-form,
+.detail-page {
+  font-size: 2rem;
+}
+.source-button-row {
+  margin: 10px 0 42px;
+  display: flex;
+  gap: 32px;
+}
+.source-button {
+  flex: 1;
+  padding: 28px 20px;
+  color: #ffffff;
+  background: #00859a;
+  text-align: center;
+  font-size: 1.8rem;
+}
+.source-button-favorite {
+  background: var(--color-danger);
+}
+.form-food-basic,
+.detail-basic {
+  display: flex;
+  align-items: center;
+  gap: 34px;
+  margin-bottom: 72px;
+}
+.image-upload-box,
+.detail-image-placeholder {
+  width: 280px;
+  height: 280px;
+  color: var(--color-text);
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.image-upload-box input {
+  display: none;
+}
+.image-upload-box .material-symbols-outlined,
+.detail-image-placeholder .material-symbols-outlined {
+  font-size: 5rem;
+}
+.basic-inputs,
+.detail-texts {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+.basic-inputs label,
+.detail-texts label,
+.form-label {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 2rem;
+}
+.basic-inputs input,
+.detail-texts input,
+.date-input,
+.readonly-box {
+  width: 100%;
+  height: 86px;
+  padding: 0 24px;
+  border: 0;
+  background: #ffffff;
+  text-align: center;
+  font-size: 2rem;
+}
+.quantity-row {
+  height: 86px;
+  margin-bottom: 32px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.quantity-row input {
+  width: 160px;
+  border: 0;
+  outline: 0;
+  text-align: center;
+  font-size: 2rem;
+}
+.quantity-button {
+  width: 56px;
+  height: 56px;
+  margin: 0 74px;
+  color: #ffffff;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.quantity-button.minus {
+  background: var(--color-main);
+}
+.quantity-button.plus {
+  background: var(--color-danger);
+}
+.date-input {
+  margin-bottom: 82px;
+}
+.submit-button {
+  width: 430px;
+  max-width: 100%;
+  height: 130px;
+  margin: 0 auto;
+  color: #ffffff;
+  background: var(--color-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.4rem;
+}
+
+/* jQuery UI Datepicker */
+.ui-datepicker {
+  width: 92%;
+  max-width: 1080px;
+  padding: 22px;
+  border-radius: 8px;
+  font-size: 1.5rem;
+}
+.ui-datepicker table {
+  font-size: 1.35rem;
+}
+.ui-datepicker td a,
+.ui-datepicker td span {
+  padding: 18px 8px;
+  text-align: center;
+}
+
+/* foodlist_detail.html */
+.detail-page .form-label {
+  margin-top: 34px;
+}
+.readonly-box {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.detail-delete-button {
+  width: 430px;
+  height: 110px;
+  margin: 52px auto 0;
+  color: #ffffff;
+  background: var(--color-main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.detail-delete-button .material-symbols-outlined {
+  font-size: 4rem;
+}
+
+@media (max-width: 767px) {
+  .source-button-row {
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .source-button {
+    padding: 18px 8px;
+    font-size: 1.55rem;
+  }
+  .form-food-basic,
+  .detail-basic {
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+  .image-upload-box,
+  .detail-image-placeholder {
+    width: 140px;
+    height: 140px;
+  }
+  .basic-inputs input,
+  .detail-texts input,
+  .date-input,
+  .readonly-box,
+  .quantity-row {
+    height: 58px;
+    font-size: 1.8rem;
+  }
+  .basic-inputs label,
+  .detail-texts label,
+  .form-label {
+    font-size: 1.8rem;
+  }
+  .quantity-button {
+    width: 34px;
+    height: 34px;
+    margin: 0 36px;
+  }
+  .date-input {
+    margin-bottom: 56px;
+  }
+  .submit-button {
+    width: 240px;
+    height: 78px;
+    font-size: 2rem;
+  }
+  .detail-delete-button {
+    width: 240px;
+    height: 76px;
+  }
+}

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>食品詳細 | 飯蔵</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+  <link rel="stylesheet" href="{{ static('css/base.css') }}">
+  <link rel="stylesheet" href="{{ static('css/tab.css') }}">
+  <link rel="stylesheet" href="{{ static('css/food-register.css') }}">
+</head>
+<body>
+  {% set active_tab = 'foods' %}
+  <header class="app-header header-with-close">
+    <h1>食品詳細</h1>
+    <a class="close-button" href="/foods/" aria-label="閉じる"><span class="material-symbols-outlined">close</span></a>
+  </header>
+
+  <main class="page detail-page">
+    <section class="detail-basic">
+      <div class="detail-image-placeholder"><span class="material-symbols-outlined">image</span></div>
+      <div class="detail-texts">
+        <label>食品名 <input type="text" value="食品名" readonly></label>
+        <label>カテゴリ <input type="text" value="カテゴリ" readonly></label>
+      </div>
+    </section>
+
+    <label class="form-label">数量</label>
+    <div class="readonly-box">000</div>
+    <label class="form-label">賞味期限</label>
+    <div class="readonly-box">xxxx年xx月xx日</div>
+    <label class="form-label">登録日</label>
+    <div class="readonly-box">xxxx年xx月xx日</div>
+
+    <button class="detail-delete-button" type="button" aria-label="削除"><span class="material-symbols-outlined">delete</span></button>
+  </main>
+
+  {% include 'components/tab.html' %}
+</body>
+</html>

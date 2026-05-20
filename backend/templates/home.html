@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ホーム | 飯蔵</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+  <link rel="stylesheet" href="{{ static('css/base.css') }}">
+  <link rel="stylesheet" href="{{ static('css/tab.css') }}">
+  <link rel="stylesheet" href="{{ static('css/foods.css') }}">
+</head>
+
+<body>
+  {% set active_tab = 'home' %}
+  <header class="app-header app-header-home">
+    <p>ようこそ{{ user.username if user and user.is_authenticated else '' }}さん</p>
+    <p>今日は{{ today|default('〇月〇日') }}です</p>
+  </header>
+
+  <main class="page home-page">
+    <section class="home-section">
+      <div class="section-heading-row">
+        <h1 class="section-title">期限が近い食品</h1>
+        <a class="more-button" href="/foods/?sort=expiry_asc">もっと見る</a>
+      </div>
+      <div class="food-card-grid">
+        {# 後でJinja2化例: {% for food in near_expiry_foods[:3] %} #}
+        {% for i in range(3) %}
+        <article class="food-card" tabindex="0" data-detail-url="/foods/detail/1/">
+          <div class="food-card-top">
+            <span>あと 000日</span>
+            <button class="icon-button delete-button" type="button" aria-label="削除">
+              <span class="material-symbols-outlined">delete</span>
+            </button>
+          </div>
+          <div class="food-image-placeholder"><span class="material-symbols-outlined">image</span></div>
+          <div class="food-card-body">
+            <h2>食品名</h2>
+            <div class="food-card-meta">
+              <span>数量 000</span>
+              <span>00月00日</span>
+            </div>
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="home-section section-border-top">
+      <h1 class="section-title">最近登録した食品</h1>
+      <div class="food-card-grid">
+        {% for i in range(3) %}
+        <article class="food-card" tabindex="0" data-detail-url="/foods/detail/1/">
+          <div class="food-card-top">
+            <span>あと 000日</span>
+            <button class="icon-button delete-button" type="button" aria-label="削除">
+              <span class="material-symbols-outlined">delete</span>
+            </button>
+          </div>
+          <div class="food-image-placeholder"><span class="material-symbols-outlined">image</span></div>
+          <div class="food-card-body">
+            <h2>食品名</h2>
+            <div class="food-card-meta">
+              <span>数量 000</span>
+              <span>00月00日</span>
+            </div>
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+
+    <div class="register-button-area">
+      <a class="circle-register-button" href="/foods/register/">食品登録</a>
+    </div>
+  </main>
+
+  {% include 'components/tab.html' %}
+  <script defer src="{{ static('js/food-list.js') }}"></script>
+</body>
+</html>
