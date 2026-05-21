@@ -23,12 +23,6 @@ class PreFood(models.Model):
 
 # 食材
 class Food(models.Model):
-    #冷蔵庫の特定
-    name = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name="foods",
-    )
     #食材名
     name = models.CharField("食品", max_length=100)
     #カテゴリー
