@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>食材アプリ</title>
+</head>
+<body>
+
+    <h1>食材アプリ</h1>
+
+    <h2>カテゴリ</h2>
+    <div id="categories"></div>
+
+    <h2>食材一覧</h2>
+    <ul id="foods"></ul>
+
+    <script>
+        // カテゴリ取得
+        fetch("http://localhost:8000/api/categories/")
+            .then(res => res.json())
+            .then(data => {
+
+                console.log("RAW DATA", data);
+
+                const container = document.getElementById("categories");
+
+                const list = Array.isArray(data) ? data : data.results;
+
+                list.forEach(cat => {
+                    const btn = document.createElement("button");
+                    btn.innerText = cat.name;
+
+                    btn.style.margin = "5px";
+                    btn.style.padding = "8px";
+
+                    btn.onclick = () => loadFoods(cat.id);
+
+                    container.appendChild(btn);
+                });
+            });
+
+        // 食材取得
+        function loadFoods(categoryId) {
+            fetch(`http://localhost:8000/api/foods/?category=${categoryId}`)
+                .then(res => res.json())
+                .then(data => {
+                    const list = document.getElementById("foods");
+                    list.innerHTML = "";
+
+                    data.forEach(food => {
+                        const li = document.createElement("li");
+                        li.innerText = food.name;
+                        li.onclick = () => {
+                            fetch("http://localhost:8000/api/foods/create/", {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json"
+                                },
+                                body: JSON.stringify({
+                                    name: food.name,
+                                    category: categoryId
+                                })
+                            })
+                            .then(() => alert("登録しました！"));
+                        };
+
+                        list.appendChild(li);
+                });
+            });
+        }    
+    </script>
+</body>
+</html>
