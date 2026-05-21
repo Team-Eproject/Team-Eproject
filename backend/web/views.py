@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from apps.foods.forms import FoodForm
 from django.views.decorators.csrf import ensure_csrf_cookie
 
 def top(request):
@@ -13,6 +14,17 @@ def login(request):
 def main(request):
     return render(request, "main.html")
 
+def foods(request):
+    form = FoodForm()
+    
+    return render(
+        request,
+        "foods/food_form.html",
+        {"form": form}
+    )
+    
+
+    
 # CSRFトークンを送るのに必要なCSRF Cookieを発行する処理
 @ensure_csrf_cookie
 def signup_view(request):

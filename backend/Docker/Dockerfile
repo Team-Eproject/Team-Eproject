@@ -32,3 +32,5 @@ RUN chmod +x /app/Docker/entrypoint.sh
 # 起動
 # -------------------------------------------------------------
 ENTRYPOINT ["/app/Docker/entrypoint.sh"]
+
+RUN pip install pillow
