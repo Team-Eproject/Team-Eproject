@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import FoodListView, FoodCreateView, CategoryListView, FoodCreateAPIView
+from .views import FoodListView, FoodCreateView, CategoryListView, FoodCreateAPIView, register_page
 
 
 
