@@ -82,5 +82,8 @@ docs/_build/
 *.sqlite3
 ._*
 
-templates_tmp
 .env_example
+
+# Docker volume garbage
+*.pid
+*.sock

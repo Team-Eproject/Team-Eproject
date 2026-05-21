@@ -1,3 +1,5 @@
+from django.shortcuts import render
+
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.generics import ListAPIView, CreateAPIView
 from .models import Food, PreFood
@@ -44,8 +46,5 @@ class FoodCreateView(CreateView):
         return super().form_valid(form)
 
 
-
-
-
-
-
+def register_page(request):
+    return render(request, "foods/register.html", using="django")

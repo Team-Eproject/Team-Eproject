@@ -8,4 +8,5 @@ urlpatterns =  [
     path("foods/create/", FoodCreateAPIView.as_view()),
     path("foods/categories/", CategoryListView.as_view()),
     path("foods/entry/", FoodCreateView.as_view(), name="food-entry"),
+    path("register/", register_page),
 ]
