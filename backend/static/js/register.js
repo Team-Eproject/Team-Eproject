@@ -54,7 +54,7 @@ categorySelect.addEventListener(
             categorySelect.value;
 
         // 未選択
-        if (!categoryID) {
+        if (!categoryID || categoryID === "new") {
 
             foodSelect.innerHTML =
                 '<option value="">食材選択</option>';
