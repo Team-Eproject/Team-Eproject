@@ -14,7 +14,7 @@ const newFoodInput =
 async function loadCategories() {
 
     const response = 
-        await fetch("/api/foods/categories");
+        await fetch("/api/foods/categories/");
 
     const categories =
         await response.json();
@@ -48,6 +48,13 @@ categorySelect.addEventListener(
 
         const categoryID =
             categorySelect.value;
+
+        // 未選択
+        if (!categoryID) {
+
+            foodSelect.innerHTML =
+                '<option value="">食材選択</option>'
+        }
 
         // 新カテゴリ入力表示
         if (categoryID === "new") {
