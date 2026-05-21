@@ -20,4 +20,4 @@ class FoodForm(forms.ModelForm):
         ]
         widgets = {
             "expiration_date": forms.DateInput(attrs={"type": "date"}),
-        }
+        } 
