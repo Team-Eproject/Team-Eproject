@@ -28,6 +28,8 @@ class Food(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="foods",
+        null=True,
+        blank=True,
     )
     #食材名
     name = models.CharField("食品", max_length=100)
