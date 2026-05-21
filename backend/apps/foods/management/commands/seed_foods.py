@@ -6,7 +6,7 @@ class Command(BaseCommand):
     help = "カテゴリ + 食材を自動生成"
 
     def handle(self, *args, **kwargs):
-        #　カテゴリ
+
         categories = ["果物", "肉", "野菜", "魚", "飲み物"]
 
         category_objs = []
@@ -14,7 +14,6 @@ class Command(BaseCommand):
             obj, _ = PreFood.objects.get_or_create(name=name)
             category_objs.append(obj)
 
-        # 食材候補
         food_names = [
             "りんご", "バナナ", "みかん", "ぶどう", "いちご",
             "牛肉", "豚肉", "鶏肉",
@@ -25,13 +24,18 @@ class Command(BaseCommand):
         created_count = 0
 
         for i in range(100):
-            name = random.choice(food_names) + f"_{i}"
+
+            name = f"{random.choice(food_names)}_{i}"
             category = random.choice(category_objs)
 
-            Food.objects.create(
+            obj, created = Food.objects.get_or_create(
                 name=name,
                 category=category
             )
-            created_count += 1
 
-        self.stdout.write(self.style.SUCCESS(f"{created_count}件の食材を作成しました！"))
+            if created:
+                created_count += 1
+
+        self.stdout.write(
+            self.style.SUCCESS(f"{created_count}件を新規作成しました！")
+        )

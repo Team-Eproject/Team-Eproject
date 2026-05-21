@@ -1,3 +1,5 @@
+console.log("register.js loaded");
+
 const categorySelect =
     document.getElementById("category-select");
 
@@ -18,6 +20,8 @@ async function loadCategories() {
 
     const categories =
         await response.json();
+
+    console.log(categories);
 
     categories.forEach(category => {
 
@@ -53,7 +57,9 @@ categorySelect.addEventListener(
         if (!categoryID) {
 
             foodSelect.innerHTML =
-                '<option value="">食材選択</option>'
+                '<option value="">食材選択</option>';
+
+            return;
         }
 
         // 新カテゴリ入力表示
