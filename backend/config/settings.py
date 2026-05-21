@@ -57,6 +57,7 @@ TEMPLATES = [
     },
     {
         # Django管理画面は従来のDjangoテンプレートを使うため残す
+        'NAME': 'django',
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
         'APP_DIRS': True,
@@ -102,7 +103,7 @@ USE_TZ = False
 
 
 # Static / Media
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 

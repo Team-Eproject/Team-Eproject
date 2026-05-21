@@ -8,8 +8,13 @@ class PreFoodSerializer(serializers.ModelSerializer):
 
 
 class FoodSerializer(serializers.ModelSerializer):
-    category = PreFoodSerializer(read_only=True)
+
+    # 一覧表示用
+    category_name = serializers.CharField(
+        source="category.name",
+        read_only=True
+    )
 
     class Meta:
         model = Food
-        fields = ["id", "name", "category"]
+        fields = ["id", "name", "category", "category_name"]
