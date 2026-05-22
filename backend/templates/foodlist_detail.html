@@ -9,30 +9,53 @@
   <link rel="stylesheet" href="{{ static('css/tab.css') }}">
   <link rel="stylesheet" href="{{ static('css/food-register.css') }}">
 </head>
+
 <body>
   {% set active_tab = 'foods' %}
+
   <header class="app-header header-with-close">
     <h1>食品詳細</h1>
-    <a class="close-button" href="/foods/" aria-label="閉じる"><span class="material-symbols-outlined">close</span></a>
+    <a class="close-button" href="/foods/" aria-label="閉じる">
+      <span class="material-symbols-outlined">close</span>
+    </a>
   </header>
 
   <main class="page detail-page">
     <section class="detail-basic">
-      <div class="detail-image-placeholder"><span class="material-symbols-outlined">image</span></div>
+
+      {% if food.image_url %}
+        <img src="{{ food.image_url }}" alt="{{ food.name }}" class="detail-image">
+      {% else %}
+        <div class="detail-image-placeholder">
+          <span class="material-symbols-outlined">image</span>
+        </div>
+      {% endif %}
+
       <div class="detail-texts">
-        <label>食品名 <input type="text" value="食品名" readonly></label>
-        <label>カテゴリ <input type="text" value="カテゴリ" readonly></label>
+        <label>
+          食品名
+          <input type="text" value="{{ food.name }}" readonly>
+        </label>
+
+        <label>
+          カテゴリ
+          <input type="text" value="{{ food.category_name }}" readonly>
+        </label>
       </div>
     </section>
 
     <label class="form-label">数量</label>
-    <div class="readonly-box">000</div>
-    <label class="form-label">賞味期限</label>
-    <div class="readonly-box">xxxx年xx月xx日</div>
-    <label class="form-label">登録日</label>
-    <div class="readonly-box">xxxx年xx月xx日</div>
+    <div class="readonly-box">{{ food.quantity }}</div>
 
-    <button class="detail-delete-button" type="button" aria-label="削除"><span class="material-symbols-outlined">delete</span></button>
+    <label class="form-label">賞味期限</label>
+    <div class="readonly-box">{{ food.expiration_detail_display }}</div>
+
+    <label class="form-label">登録日</label>
+    <div class="readonly-box">{{ food.created_at_display }}</div>
+
+    <button class="detail-delete-button" type="button" aria-label="削除">
+      <span class="material-symbols-outlined">delete</span>
+    </button>
   </main>
 
   {% include 'components/tab.html' %}

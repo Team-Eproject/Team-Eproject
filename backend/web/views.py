@@ -4,6 +4,8 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from datetime import date
 from django.shortcuts import render
 from apps.foods.models import Food
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, get_object_or_404
 
 def top(request):
     return render(request, "top.html")

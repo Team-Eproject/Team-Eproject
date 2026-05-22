@@ -27,10 +27,7 @@
       </div>
 
       <div class="food-card-grid">
-        <!-- {% for food in near_expiry_foods[:3] %}  -->
-        <!-- {% for i in range(3) %} -->
         {% for food in near_expiry_foods %}
-        <!-- <article class="food-card" tabindex="0" data-detail-url="/foods/detail/1/"> -->
         <article class="food-card" tabindex="0" data-detail-url="{{ url('foodlist_detail', food.id) }}">
 
           <div class="food-card-top">
@@ -49,7 +46,8 @@
             <img src="{{ food.image_url }}" alt="{{ food.name }}" class="food-image">
           {% else %}
           <div class="food-image-placeholder"><span class="material-symbols-outlined">image</span></div>
-
+          {% endif %}
+          
           <div class="food-card-body">
             <h2>{{ food.name }}</h2>
             <div class="food-card-meta">
@@ -68,7 +66,6 @@
       <h1 class="section-title">最近登録した食品</h1>
 
       <div class="food-card-grid">
-        <!-- {% for i in range(3) %} -->
         {% for food in recent_foods %}
         <article class="food-card" tabindex="0" data-detail-url="{{ url('foodlist_detail', food.id) }}">
           <div class="food-card-top">
@@ -77,20 +74,28 @@
             {% else %}
               <span>あと {{ food.days_left }}日</span>
             {% endif %}
-            <!-- ここまで -->
+
             <button class="icon-button delete-button" type="button" aria-label="削除">
               <span class="material-symbols-outlined">delete</span>
             </button>
           </div>
+
+          {% if food.image_url %}
+          <img src="{{ food.image_url }}" alt="{{ food.name }}" class="food-image">
+          {% else %}
           <div class="food-image-placeholder"><span class="material-symbols-outlined">image</span></div>
+          {% endif %}
+
           <div class="food-card-body">
-            <h2>食品名</h2>
+            <h2>{{ food.name }}</h2>
             <div class="food-card-meta">
-              <span>数量 000</span>
-              <span>00月00日</span>
+              <span>数量 {{ food.quantity }}</span>
+              <span>{{ food.expiration_display }}</span>
             </div>
           </div>
         </article>
+        {% else %}
+          <p class="empty-message">最近登録した食品はありません</p>
         {% endfor %}
       </div>
     </section>

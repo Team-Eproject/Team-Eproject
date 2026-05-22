@@ -29,24 +29,41 @@
       </select>
     </div>
 
-    <section class="food-list" aria-label="食品一覧">
-      {% for i in range(7) %}
-      <article class="food-list-item" tabindex="0" data-detail-url="/foods/detail/1/">
-        <div class="list-image-placeholder"><span class="material-symbols-outlined">image</span></div>
-        <div class="list-main">
-          <span class="days-left">あと 000日</span>
-          <h2>食品名</h2>
-        </div>
-        <div class="list-sub">
-          <span>00月00日</span>
-          <span>数量 000</span>
-        </div>
-        <button class="icon-button list-delete-button" type="button" aria-label="削除">
-          <span class="material-symbols-outlined">delete</span>
-        </button>
-      </article>
-      {% endfor %}
-    </section>
+<section class="food-list" aria-label="食品一覧">
+  {% for food in foods %}
+  <article class="food-list-item" tabindex="0" data-detail-url="{{ url('foodlist_detail', food.id) }}">
+
+    {% if food.image_url %}
+      <img src="{{ food.image_url }}" alt="{{ food.name }}" class="list-image">
+    {% else %}
+      <div class="list-image-placeholder">
+        <span class="material-symbols-outlined">image</span>
+      </div>
+    {% endif %}
+
+    <div class="list-main">
+      {% if food.days_left is none %}
+        <span class="days-left">期限なし</span>
+      {% else %}
+        <span class="days-left">あと {{ food.days_left }}日</span>
+      {% endif %}
+
+      <h2>{{ food.name }}</h2>
+    </div>
+
+    <div class="list-sub">
+      <span>{{ food.expiration_display }}</span>
+      <span>数量 {{ food.quantity }}</span>
+    </div>
+
+    <button class="icon-button list-delete-button" type="button" aria-label="削除">
+      <span class="material-symbols-outlined">delete</span>
+    </button>
+  </article>
+  {% else %}
+    <p class="empty-message">登録されている食品はありません</p>
+  {% endfor %}
+</section>
   </main>
 
   {% include 'components/tab.html' %}

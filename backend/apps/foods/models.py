@@ -24,7 +24,7 @@ class PreFood(models.Model):
 # 食材
 class Food(models.Model):
     #冷蔵庫の特定
-    name = models.ForeignKey(
+    user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="foods",
