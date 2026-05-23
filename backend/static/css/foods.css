@@ -1,5 +1,5 @@
 /* =========================================================
-  foods.css : home.html / foodslist.html / pre_foodlist.html / favorite_foodslist.html
+  foods.css : home.html / foodslist.html / pre_foodlist.html / foodlist_detail.html / favorite_foodslist.html
    ========================================================= */
 .section-heading-row,
 .control-row {
@@ -167,6 +167,11 @@
   border: 0;
   outline: 0;
   font-size: 1.8rem;
+}
+.search-button{
+  font: icon;
+  background-color: #54b0d4;
+  color: #ffffff;
 }
 .compact-list-page .ui-selectmenu-button.ui-button { width: 34%; }
 .prefood-list { border-top: 4px solid var(--color-line); }

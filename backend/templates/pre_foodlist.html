@@ -1,49 +1,75 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>食品データ | 飯蔵</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
-  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="{{ static('css/base.css') }}">
-  <link rel="stylesheet" href="{{ static('css/tab.css') }}">
-  <link rel="stylesheet" href="{{ static('css/foods.css') }}">
-</head>
-<body>
-  {% set active_tab = 'home' %}
-  <header class="app-header header-with-close">
-    <h1>食品データ</h1>
-    <a class="close-button" href="/foods/register/" aria-label="閉じる"><span class="material-symbols-outlined">close</span></a>
-  </header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>食品データ | 飯蔵</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css" />
+    <link rel="stylesheet" href="{{ static('css/base.css') }}" />
+    <link rel="stylesheet" href="{{ static('css/tab.css') }}" />
+    <link rel="stylesheet" href="{{ static('css/foods.css') }}" />
+  </head>
+  <body>
+    {% set active_tab = 'home' %}
+    <header class="app-header header-with-close">
+      <h1>食品データ</h1>
+      <a class="close-button" href="/foods/register/" aria-label="閉じる"><span class="material-symbols-outlined">close</span></a>
+    </header>
 
-  <main class="page foods-page compact-list-page">
-    <div class="control-row">
-      <label class="search-box"><span class="material-symbols-outlined">search</span><input type="search" name="q" aria-label="食品検索"></label>
-      <select id="category-select" class="selectmenu selectmenu-primary" name="category" aria-label="カテゴリ">
-        <option value="">カテゴリ</option>
-        <option value="1">カテゴリ1</option>
-        <option value="2">カテゴリ2</option>
-        <option value="3">カテゴリ3</option>
-      </select>
-    </div>
+    <main class="page foods-page compact-list-page">
+      <form method="get" class="control-row">
+        <label class="search-box">
+          <span class="material-symbols-outlined">search</span>
+          <input type="search" name="q" aria-label="食品検索" value="{{ q }}" />
+        </label>
 
-    <section class="prefood-list" aria-label="食品データ一覧">
-      {% for i in range(7) %}
-      <article class="prefood-item">
-        <div class="list-image-placeholder"><span class="material-symbols-outlined">image</span></div>
-        <h2>食品名</h2>
-        <button class="small-add-button" type="button" data-food-name="食品名" data-category="カテゴリ1"><span class="material-symbols-outlined">add</span></button>
-        <button class="favorite-toggle" type="button" aria-label="お気に入り登録"><span class="material-symbols-outlined">nutrition</span></button>
-      </article>
-      {% endfor %}
-    </section>
-  </main>
+        <select id="category-select" class="selectmenu selectmenu-primary" name="category" aria-label="カテゴリ">
+          <option value="">カテゴリ</option>
+          {% for category in categories %}
+          <option 
+          value="{{ category.id }}"
+          {% if selected_category_id == category.id|string %}selected{% endif %}>
+            {{ category.name }}
+          </option>
+          {% endfor %}
+        </select>
 
-  {% include 'components/tab.html' %}
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-  <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.min.js"></script>
-  <script defer src="{{ static('js/common-ui.js') }}"></script>
-  <script defer src="{{ static('js/food-list.js') }}"></script>
-</body>
+        <button class="search-button" type="submit">検索</button>
+      </form>
+
+      <section class="prefood-list" aria-label="食品データ一覧">
+        {% for prefood in prefoods %}
+        <article class="prefood-item">
+          {% if prefood.image %}
+          <img src="{{ prefood.image.url }}" alt="{{ prefood.name }}" class="list-image" />
+          {% else %}
+          <div class="list-image-placeholder">
+            <span class="material-symbols-outlined">image</span>
+          </div>
+          {% endif %}
+
+          <h2>{{ prefood.name }}</h2>
+          <p>{{ prefood.category.name }}</p>
+
+          <a class="small-add-button" href="{{ url('food_register') }}?template_id={{ prefood.id }}">
+            <span class="material-symbols-outlined">add</span>
+          </a>
+
+          <button class="favorite-toggle" type="button" aria-label="お気に入り登録">
+            <span class="material-symbols-outlined">nutrition</span>
+          </button>
+        </article>
+        {% else %}
+        <p class="empty-message">食品データがありません</p>
+        {% endfor %}
+      </section>
+    </main>
+
+    {% include 'components/tab.html' %}
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.min.js"></script>
+    <script defer src="{{ static('js/common-ui.js') }}"></script>
+    <script defer src="{{ static('js/food-list.js') }}"></script>
+  </body>
 </html>

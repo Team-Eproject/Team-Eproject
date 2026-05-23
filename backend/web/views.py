@@ -5,7 +5,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.csrf import ensure_csrf_cookie
 
 from apps.foods.forms import FoodForm
-from apps.foods.models import Food, PreFood
+from apps.foods.models import Food, PreFood, FoodTemplate
 
 def top(request):
     return render(request, "top.html")
@@ -94,26 +94,73 @@ def foodslist(request):
         "foods": build_food_cards(foods, today),
     })
 
+@login_required
 def food_register(request):
+    categories = PreFood.objects.all()
+
+    template_id = request.GET.get("template_id")
+    selected_template = None
+
+    if template_id:
+        selected_template = get_object_or_404(
+            FoodTemplate.objects.select_related("category"),
+            id=template_id,
+        )
+
     if request.method == "POST":
         form = FoodForm(request.POST, request.FILES)
 
         if form.is_valid():
             food = form.save(commit=False)
             food.user = request.user
-            food.save()
 
+            # 食品プリセットから選んだ場合、画像未アップロードならデフォルト画像をコピー
+            template_id = request.POST.get("template_id")
+            if template_id and not food.image:
+                template = get_object_or_404(FoodTemplate, id=template_id)
+                food.image = template.image
+
+            food.save()
             return redirect("home")
+
     else:
-        form = FoodForm()
+        initial = {}
+
+        if selected_template:
+            initial = {
+                "name": selected_template.name,
+                "category": selected_template.category,
+            }
+
+        form = FoodForm(initial=initial)
 
     return render(request, "food_register.html", {
         "form": form,
         "categories": categories,
+        "selected_template": selected_template,
     })
 
+@login_required
 def pre_foodlist(request):
-    return render(request, "pre_foodlist.html")
+    categories = PreFood.objects.all()
+
+    q = request.GET.get("q", "")
+    category_id = request.GET.get("category", "")
+
+    prefoods = FoodTemplate.objects.select_related("category").all()
+
+    if q:
+        prefoods = prefoods.filter(name__icontains=q)
+
+    if category_id:
+        prefoods = prefoods.filter(category_id=category_id)
+
+    return render(request, "pre_foodlist.html", {
+        "prefoods": prefoods,
+        "categories": categories,
+        "q": q,
+        "selected_category_id": category_id,
+    })
 
 def favorite_foodslist(request):
     return render(request, "favorite_foodslist.html")
