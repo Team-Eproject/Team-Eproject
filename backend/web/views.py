@@ -1,11 +1,11 @@
-from django.shortcuts import render
-from apps.foods.forms import FoodForm
-from django.views.decorators.csrf import ensure_csrf_cookie
 from datetime import date
-from django.shortcuts import render
-from apps.foods.models import Food
+
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.views.decorators.csrf import ensure_csrf_cookie
+
+from apps.foods.forms import FoodForm
+from apps.foods.models import Food, PreFood
 
 def top(request):
     return render(request, "top.html")
@@ -95,7 +95,22 @@ def foodslist(request):
     })
 
 def food_register(request):
-    return render(request, "food_register.html")
+    if request.method == "POST":
+        form = FoodForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            food = form.save(commit=False)
+            food.user = request.user
+            food.save()
+
+            return redirect("home")
+    else:
+        form = FoodForm()
+
+    return render(request, "food_register.html", {
+        "form": form,
+        "categories": categories,
+    })
 
 def pre_foodlist(request):
     return render(request, "pre_foodlist.html")

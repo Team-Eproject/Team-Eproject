@@ -18,8 +18,9 @@
   </header>
 
   <main class="register-page">
-    <form class="food-form" method="post" action="/api/foods/" enctype="multipart/form-data">
-      {# {% csrf_token %} : DjangoTemplatesでは使える。Jinja2ではCSRF設定後に追加 #}
+    <form class="food-form" method="post" action="{{ url('food_register') }}" enctype="multipart/form-data">
+      <!-- CSRFトークン -->
+      <input type="hidden" name="srfmiddlewaretoken" value="{{ csrf_token }}">
       <div class="source-button-row">
         <a class="source-button" href="/foods/pre/">食品データから選ぶ</a>
         <a class="source-button source-button-favorite" href="/foods/favorites/">お気に入りから選ぶ</a>
@@ -48,7 +49,7 @@
       </div>
 
       <label class="form-label" for="expiry-date">賞味期限</label>
-      <input id="expiry-date" class="date-input" type="text" name="expiry_date" placeholder="xxxx年xx月xx日" autocomplete="off">
+      <input id="expiry-date" class="date-input" type="text" name="expiration_date" placeholder="xxxx年xx月xx日" autocomplete="off">
 
       <button class="submit-button" type="submit">登録</button>
     </form>
