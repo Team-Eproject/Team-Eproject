@@ -9,4 +9,5 @@ urlpatterns =  [
     path("foods/categories/", CategoryListView.as_view()),
     path("foods/entry/", FoodCreateView.as_view(), name="food-entry"),
     path("register/", register_page),
+    path("recipe/", views.ai_menu_process, name="ai_menu_process"),
 ]
