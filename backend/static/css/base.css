@@ -130,7 +130,7 @@ button { cursor: pointer; border: 0; }
   .close-button { width: 54px; height: 54px; }
   .close-button .material-symbols-outlined { font-size: 3.8rem; }
   .page { padding: 18px 18px 118px; }
-  .ui-selectmenu-button.ui-button { height: 58px; padding: 14px 18px; }
+  .ui-selectmenu-button.ui-button { height: 58px; padding: 14px 18px; width: 40%; font-size: 10px;}
 }
 
 /* タブレット向け */

@@ -6,6 +6,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 
 from apps.foods.forms import FoodForm
 from apps.foods.models import Food, PreFood, FoodTemplate
+from django.views.decorators.http import require_POST
 
 def top(request):
     return render(request, "top.html")
@@ -48,6 +49,18 @@ def build_food_cards(foods, today):
 def home(request):
     today = date.today()
 
+    # 今日が期限の食品(アラート用)
+    today_expiry_foods = (
+        Food.objects
+        .select_related("category")
+        .filter(
+            user=request.user,
+            no_expiration_date=False,
+            expiration_date=today,
+        )
+        .order_by("created_at")
+    )
+
     # 期限が近い食品
     # 賞味期限なし・賞味期限未入力の食品は除外
     near_expiry_foods = (
@@ -75,23 +88,45 @@ def home(request):
     return render(request, "home.html", {
         "today": today.strftime("%m月%d日"),
         "user": request.user,
+        "today_expiry_foods": build_food_cards(today_expiry_foods, today),
         "near_expiry_foods": build_food_cards(near_expiry_foods, today),
         "recent_foods": build_food_cards(recent_foods, today),
+        "registered": request.GET.get("registered") == "1",
+        "deleted_expired": request.GET.get("deleted_expired") == "1",
     })
 
 @login_required
 def foodslist(request):
     today = date.today()
 
+    sort = request.GET.get("sort", "expiry_asc")
+    category_id = request.GET.get("category", "")
+
     foods = (
         Food.objects
         .select_related("category")
         .filter(user=request.user)
-        .order_by("expiration_date", "-created_at")
     )
+
+    if category_id:
+        foods = foods.filter(category_id=category_id)
+
+    if sort == "created_desc":
+        foods = foods.order_by("-created_at")
+    elif sort == "created_asc":
+        foods = foods.order_by("created_at")
+    elif sort == "expiry_desc":
+        foods = foods.order_by("-expiration_date")
+    else:
+        foods = foods.order_by("expiration_date", "-created_at")
+
+    categories = PreFood.objects.all()
 
     return render(request, "foodslist.html", {
         "foods": build_food_cards(foods, today),
+        "categories": categories,
+        "selected_sort": sort,
+        "selected_category_id": category_id,
     })
 
 @login_required
@@ -121,7 +156,7 @@ def food_register(request):
                 food.image = template.image
 
             food.save()
-            return redirect("home")
+            return redirect("/home/?registered=1")
 
     else:
         initial = {}
@@ -209,8 +244,32 @@ def foods(request):
         {"form": form}
     )
     
+@login_required
+@require_POST
+def delete_expired_foods(request):
+    today = date.today()
 
-    
+    Food.objects.filter(
+        user=request.user,
+        no_expiration_date=False,
+        expiration_date__lt=today,
+    ).delete()
+
+    return redirect("/home/?deleted_expired=1")
+
+@login_required
+@require_POST
+def delete_food(request, food_id):
+    food = get_object_or_404(
+        Food,
+        id=food_id,
+        user=request.user,
+    )
+
+    food.delete()
+
+    return redirect("foodslist")
+
 # CSRFトークンを送るのに必要なCSRF Cookieを発行する処理
 @ensure_csrf_cookie
 def signup_view(request):

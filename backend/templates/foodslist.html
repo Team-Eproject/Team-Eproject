@@ -15,19 +15,31 @@
   <header class="app-header"><h1>食品リスト</h1></header>
 
   <main class="page foods-page">
-    <div class="control-row">
-      <select id="sort-select" class="selectmenu" name="sort" aria-label="並び順">
-        <option value="expiry_asc" selected>期限が近い順</option>
-        <option value="created_desc">登録が新しい順</option>
-        <option value="created_asc">登録が古い順</option>
-      </select>
-      <select id="category-select" class="selectmenu selectmenu-primary" name="category" aria-label="カテゴリ">
-        <option value="">カテゴリ</option>
-        <option value="1">カテゴリ1</option>
-        <option value="2">カテゴリ2</option>
-        <option value="3">カテゴリ3</option>
-      </select>
-    </div>
+<form method="get" class="control-row food-filter-form">
+  <select id="sort-select" class="selectmenu" name="sort" aria-label="並び順">
+    <option value="expiry_asc" {% if selected_sort == "expiry_asc" %}selected{% endif %}>期限が近い順</option>
+    <option value="expiry_desc" {% if selected_sort == "expiry_desc" %}selected{% endif %}>期限が遠い順</option>
+    <option value="created_desc" {% if selected_sort == "created_desc" %}selected{% endif %}>登録が新しい順</option>
+    <option value="created_asc" {% if selected_sort == "created_asc" %}selected{% endif %}>登録が古い順</option>
+  </select>
+
+  <select id="category-select" class="selectmenu selectmenu-primary" name="category" aria-label="カテゴリ">
+    <option value="">カテゴリ</option>
+    {% for category in categories %}
+      <option
+        value="{{ category.id }}"
+        {% if selected_category_id == category.id|string %}selected{% endif %}
+      >
+        {{ category.name }}
+      </option>
+    {% endfor %}
+  </select>
+
+  <button class="filter-icon-button" type="submit" aria-label="絞り込み">
+    <span class="material-symbols-outlined">filter_list</span>
+  </button>
+</form>
+
 
 <section class="food-list" aria-label="食品一覧">
   {% for food in foods %}
@@ -56,9 +68,20 @@
       <span>数量 {{ food.quantity }}</span>
     </div>
 
-    <button class="icon-button list-delete-button" type="button" aria-label="削除">
-      <span class="material-symbols-outlined">delete</span>
-    </button>
+    <form method="post" 
+    action="{{ url('delete_food', food.id) }}"
+    onsubmit="return confirm('この食品を削除しますか？');"
+    >
+    <input type="hidden"
+    name="csrfmiddlewaretoken"
+    value="{{ csrf_token }}"
+    >
+      <button class="icon-button list-delete-button" type="submit"
+      aria-label="削除"
+      >
+        <span class="material-symbols-outlined">delete</span>
+      </button>
+    </form>
   </article>
   {% else %}
     <p class="empty-message">登録されている食品はありません</p>

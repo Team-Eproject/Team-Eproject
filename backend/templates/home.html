@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="{{ static('css/base.css') }}">
   <link rel="stylesheet" href="{{ static('css/tab.css') }}">
   <link rel="stylesheet" href="{{ static('css/foods.css') }}">
+  <link rel="stylesheet" href="{{ static('css/alert.css') }}">
 </head>
 
 <body>
@@ -18,7 +19,26 @@
     <p>今日は{{ today|default('〇月〇日') }}です</p>
   </header>
 
+  <!-- 期限お知らせアラート -->
+  {% if today_expiry_foods %}
+  <section class="today-expiry-alert">
+    <strong>今日が期限の食品があります！</strong>
+    <ul>
+      {% for food in today_expiry_foods %}
+        <li>{{ food.name }}：数量 {{ food.quantity }}</li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
   <main class="page home-page">
+
+    <!-- 保存完了アラート -->
+    {% if registered %}
+    <div class="success-alert">
+      食品を登録しました！
+    </div>
+    {% endif %}
 
     <section class="home-section">
       <div class="section-heading-row">
@@ -75,9 +95,20 @@
               <span>あと {{ food.days_left }}日</span>
             {% endif %}
 
-            <button class="icon-button delete-button" type="button" aria-label="削除">
-              <span class="material-symbols-outlined">delete</span>
-            </button>
+            <form method="post" 
+            action="{{ url('delete_food', food.id) }}"
+            onsubmit="return confirm('この食品を削除しますか？');"
+            >
+              <input type="hidden"
+              name="csrfmiddlewaretoken"
+              value="{{ csrf_token }}"
+              >
+                <button class="icon-button list-delete-button" type="submit"
+                aria-label="削除"
+                >
+                  <span class="material-symbols-outlined">delete</span>
+                </button>
+              </form>
           </div>
 
           {% if food.image_url %}

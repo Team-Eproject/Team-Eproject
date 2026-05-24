@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
   });
-
+// ソート自動適用
   document.querySelectorAll('.small-add-button').forEach(function (button) {
     button.addEventListener('click', function () {
       // 後で sessionStorage か URLパラメータ経由で food_register.html に渡す
@@ -27,5 +27,5 @@ document.addEventListener('DOMContentLoaded', function () {
       params.set('category', button.dataset.category || '');
       location.href = '/foods/register/?' + params.toString();
     });
-  });
+  });  
 });
