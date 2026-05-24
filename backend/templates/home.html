@@ -57,9 +57,26 @@
               <span>あと {{ food.days_left }}日</span>
             {% endif %}
 
-            <button class="icon-button delete-button" type="button" aria-label="削除">
-              <span class="material-symbols-outlined">delete</span>
-            </button>
+            <form method="post" 
+            action="{{ url('delete_food', food.id) }}"
+            onsubmit="return confirm('この食品を削除しますか？');"
+            class="icon-button delete-button"
+            >
+              <input type="hidden"
+              name="csrfmiddlewaretoken"
+              value="{{ csrf_token }}"
+              >
+              <input type="hidden"
+              name="next" 
+              value="home"
+              >
+                <button type="submit"
+                aria-label="削除"
+                class="icon-button delete-button"
+                >
+                  <span class="material-symbols-outlined">delete</span>
+                </button>
+              </form>
           </div>
 
           {% if food.image_url %}
@@ -98,13 +115,19 @@
             <form method="post" 
             action="{{ url('delete_food', food.id) }}"
             onsubmit="return confirm('この食品を削除しますか？');"
+            class="icon-button delete-button"
             >
               <input type="hidden"
               name="csrfmiddlewaretoken"
               value="{{ csrf_token }}"
               >
-                <button class="icon-button list-delete-button" type="submit"
+              <input type="hidden"
+              name="next" 
+              value="home"
+              >
+                <button type="submit"
                 aria-label="削除"
+                class="icon-button delete-button"
                 >
                   <span class="material-symbols-outlined">delete</span>
                 </button>

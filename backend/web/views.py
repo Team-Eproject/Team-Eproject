@@ -268,6 +268,11 @@ def delete_food(request, food_id):
 
     food.delete()
 
+    next_url = request.POST.get("next") or "foodslist"
+
+    if next_url == "home":
+        return redirect("home")
+
     return redirect("foodslist")
 
 # CSRFトークンを送るのに必要なCSRF Cookieを発行する処理
