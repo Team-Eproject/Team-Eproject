@@ -85,6 +85,13 @@ def home(request):
         .order_by("-created_at")[:3]
     )
 
+    # 期限切れの食品があるときのみまとめて削除ボタン表示
+    expired_food_count = Food.objects.filter(
+    user=request.user,
+    no_expiration_date=False,
+    expiration_date__lt=today,
+    ).count()
+
     return render(request, "home.html", {
         "today": today.strftime("%m月%d日"),
         "user": request.user,
@@ -93,6 +100,7 @@ def home(request):
         "recent_foods": build_food_cards(recent_foods, today),
         "registered": request.GET.get("registered") == "1",
         "deleted_expired": request.GET.get("deleted_expired") == "1",
+        "expired_food_count": expired_food_count,
     })
 
 @login_required
@@ -270,7 +278,7 @@ def delete_food(request, food_id):
 
     next_url = request.POST.get("next") or "foodslist"
 
-    if next_url == "home":
+    if next_url == "home" or "foodlist_detail":
         return redirect("home")
 
     return redirect("foodslist")

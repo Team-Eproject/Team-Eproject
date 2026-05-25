@@ -29,6 +29,38 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
 }
+/* home.html：期限切れ食品まとめ削除ボタン */
+.expired-action-row {
+  display: flex;
+  justify-content: flex-end;
+  margin: 8px 0 16px;
+}
+
+.expired-delete-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  min-width: 180px;
+  min-height: 40px;
+  padding: 8px 14px;
+
+  border: none;
+  border-radius: 999px;
+
+  background: #005f83;
+  color: #fff;
+
+  font-size: 1.3rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.expired-delete-button .material-symbols-outlined {
+  font-size: 2rem;
+}
+
 .food-card {
   overflow: hidden;
   background: #ffffff;
@@ -267,6 +299,42 @@
   border-color: var(--color-danger);
 }
 
+/* =========================================================
+  画像表示サイズ調整
+  home.html / foodslist.html / pre_foodlist.html
+========================================================= */
+
+/* home.html：カード内画像 */
+.food-image {
+  width: 100%;
+  height: 170px;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+  background: #ffffff;
+}
+
+/* foodslist.html / pre_foodlist.html：リスト内画像 */
+.list-image {
+  width: 150px;
+  height: 126px;
+  flex: 0 0 150px;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+  background: #aaaaaa;
+}
+
+/* foodlist_detail.html：詳細画像 */
+.detail-image {
+  width: 280px;
+  height: 280px;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+  background: #ffffff;
+}
+
 @media (max-width: 767px) {
   .section-heading-row { align-items: flex-start; }
   .section-title { margin-bottom: 16px; font-size: 2.2rem; }
@@ -303,6 +371,21 @@
   margin: 12px 0 16px;
 }
 
+  .food-image {
+    height: 86px;
+  }
+
+  .list-image {
+    width: 72px;
+    height: 72px;
+    flex-basis: 72px;
+  }
+
+  .detail-image {
+    width: 140px;
+    height: 140px;
+  }
+
 /* jQuery UI selectmenuが生成するボタンの幅調整 */
 .food-filter-form #sort-select-button {
   width: 150px !important;
@@ -313,4 +396,21 @@
   width: 100px !important;
   min-width: 0;
 }
+
+}
+@media (max-width: 480px) {
+  .expired-action-row {
+    justify-content: center;
+    margin: 6px 0 12px;
+  }
+
+  .expired-delete-button {
+    width: 88%;
+    min-height: 38px;
+    font-size: 1.1rem;
+  }
+
+  .expired-delete-button .material-symbols-outlined {
+    font-size: 1.8rem;
+  }
 }

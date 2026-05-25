@@ -40,11 +40,37 @@
     </div>
     {% endif %}
 
+    <!-- 削除完了アラート -->
+    {% if deleted_expired %}
+      <div class="success-alert">
+    期限切れ食品を削除しました！
+      </div>
+    {% endif %}
+
+
     <section class="home-section">
       <div class="section-heading-row">
         <h1 class="section-title">期限が近い食品</h1>
         <a class="more-button" href="/foods/?sort=expiry_asc">もっと見る</a>
       </div>
+    
+      <!-- 期限が近い食品をまとめて削除 -->
+    {% if expired_food_count > 0 %}
+      <div class="expired-action-row">
+        <form
+        method="post"
+        action="{{ url('delete_expired_foods') }}"
+        onsubmit="return confirm('賞味期限切れの食品をまとめて削除しますか？');"
+      >
+        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+
+        <button type="submit" class="expired-delete-button">
+          <span class="material-symbols-outlined">delete_sweep</span>
+        期限切れをまとめて削除
+        </button>
+        </form>
+      </div>
+    {% endif %}
 
       <div class="food-card-grid">
         {% for food in near_expiry_foods %}

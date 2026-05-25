@@ -137,6 +137,15 @@
 opacity: 80%;
 }
 
+/* food_register.html：登録画面のプレビュー画像 */
+.upload-preview-image {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+
 /* jQuery UI Datepicker */
 .ui-datepicker {
   width: 92%;

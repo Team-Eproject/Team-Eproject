@@ -53,9 +53,22 @@
     <label class="form-label">登録日</label>
     <div class="readonly-box">{{ food.created_at_display }}</div>
 
-    <button class="detail-delete-button" type="button" aria-label="削除">
-      <span class="material-symbols-outlined">delete</span>
-    </button>
+    <form method="post"
+    action="{{ url('delete_food', food.id) }}"
+    onsubmit="return confirm('この食品を削除しますか？');"
+    >
+    <input type="hidden"
+    name="csrfmiddlewaretoken"
+    value="{{ csrf_token }}"
+    >
+    <input type="hidden"
+    name="next" 
+    value="foodlist_detail"
+    >
+      <button class="detail-delete-button" type="submit" aria-label="削除">
+        <span class="material-symbols-outlined">delete</span>
+      </button>
+    </form>
   </main>
 
   {% include 'components/tab.html' %}

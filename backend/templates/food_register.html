@@ -35,7 +35,10 @@
 <section class="form-food-basic">
         <label class="image-upload-box">
           {% if selected_template and selected_template.image %}
-            <img src="{{ selected_template.image.url }}" alt="{{ selected_template.name }}">
+            <img src="{{ selected_template.image.url }}" 
+            alt="{{ selected_template.name }}"
+            class="upload-preview-image"
+            >
           {% else %}
             <span class="material-symbols-outlined">image</span>
           {% endif %}
