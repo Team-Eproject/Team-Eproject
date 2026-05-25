@@ -1,13 +1,9 @@
-from django.shortcuts import render
+# from django.shortcuts import render
+
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.generics import ListAPIView, CreateAPIView
 from .models import Food, PreFood, Message
 from .serializers import FoodSerializer, PreFoodSerializer
-from django.views.generic import CreateView
-from django.urls import reverse_lazy
-from .forms import FoodForm
-from .services import generate_menu
-
 
 import json
 from google import genai
@@ -23,7 +19,7 @@ class FoodListView(ListAPIView):
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ["category", "name"]
 
-class FoodCreateAPIView(CreateAPIView):
+class FoodCreateView(CreateAPIView):
     queryset = Food.objects.all()
     serializer_class = FoodSerializer
 
