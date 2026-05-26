@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>登録情報 | 飯蔵</title>
+
+  <!-- Material Symbols by Google -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+
+  <link rel="stylesheet" href="{{ static('css/base.css') }}">
+  <link rel="stylesheet" href="{{ static('css/tab.css') }}">
+  <link rel="stylesheet" href="{{ static('css/user.css') }}">
+</head>
+
+<body>
+  {% set active_tab = 'user' %}
+
+  <!-- user_info.html：ヘッダー -->
+  <header class="app-header">
+    <h1>登録情報</h1>
+  </header>
+
+  <!-- user_info.html：登録ユーザー情報 -->
+  <main class="page user-info-page">
+
+    <section class="user-profile-area">
+
+      <!-- user_info.html：ユーザーアイコン -->
+      <div class="user-icon-circle">
+        <span class="material-symbols-outlined">person</span>
+      </div>
+
+      <!-- user_info.html：ユーザー名 -->
+      <div class="username-box">
+        {{ user.username if user and user.is_authenticated else 'username' }}
+      </div>
+
+      <!-- user_info.html：登録食品数 -->
+      <p class="food-count-text">
+        冷蔵庫に登録されている食品数：
+        <span>{{ food_count|default(0) }}</span>
+        件
+      </p>
+
+    </section>
+
+    <!-- user_info.html：ログアウト -->
+    <section class="logout-area">
+      <form method="post" action="{{ url('logout') }}">
+        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+        <button type="submit" class="logout-button">
+          ログアウト
+        </button>
+      </form>
+    </section>
+
+  </main>
+
+  <!-- user_info.html：フッター -->
+  {% include 'components/tab.html' %}
+</body>
+</html>

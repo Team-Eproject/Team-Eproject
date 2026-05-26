@@ -1,5 +1,6 @@
 from datetime import date
 
+from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.csrf import ensure_csrf_cookie
@@ -282,6 +283,23 @@ def delete_food(request, food_id):
         return redirect("home")
 
     return redirect("foodslist")
+
+@login_required
+def user_info(request):
+    food_count = Food.objects.filter(user=request.user).count()
+
+    return render(request, "user_info.html", {
+        "user": request.user,
+        "food_count": food_count,
+    })
+
+@login_required
+def user_logout(request):
+    if request.method == "POST":
+        logout(request)
+        return redirect("top")
+
+    return redirect("user_info")
 
 # CSRFトークンを送るのに必要なCSRF Cookieを発行する処理
 @ensure_csrf_cookie
