@@ -2,7 +2,7 @@
   base.css : 全ページ共通設定・配色
    ========================================================= */
 :root {
-  --color-main: #015c83;
+  --color-main: #015483;
   --color-main-deep: #005878;
   --color-accent: #54b0d4;
   --color-accent-soft: #a5c5d5;

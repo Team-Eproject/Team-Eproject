@@ -13,4 +13,6 @@ urlpatterns = [
     path("foods/detail/<int:food_id>/", views.foodlist_detail, name="foodlist_detail"),
     path("foods/delete-expired/", views.delete_expired_foods, name="delete_expired_foods"),
     path("foods/delete/<int:food_id>/", views.delete_food, name="delete_food"),
+    path("user-info/", views.user_info, name="user_info"),
+    path("logout/", views.user_logout, name="logout"),
 ]
