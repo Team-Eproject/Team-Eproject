@@ -11,6 +11,7 @@ urlpatterns = [
     # API
     path("api/users/", include("apps.users.urls")),
     path("api/foods/", include("apps.foods.urls")),
+    path("api/", include("apps.shopping_memos.urls")),
 ]
 
 # 開発中用 画像表示
