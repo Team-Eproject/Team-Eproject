@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>メモ作成 | 飯蔵</title>
+
+  <!-- Material Symbols by Google -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+
+  <link rel="stylesheet" href="{{ static('css/base.css') }}">
+  <link rel="stylesheet" href="{{ static('css/tab.css') }}">
+  <link rel="stylesheet" href="{{ static('css/memo.css') }}">
+</head>
+
+<body>
+  {% set active_tab = 'memo' %}
+
+  <!-- memo_register.html：ヘッダー -->
+  <header class="app-header header-with-close">
+    <h1>{% if is_edit %}メモ編集{% else %}メモを作成{% endif %}</h1>
+
+    <a class="close-button" href="{{ url('memolist') }}" aria-label="閉じる">
+      <span class="material-symbols-outlined">close</span>
+    </a>
+  </header>
+
+  <!-- memo_register.html：メモ作成フォーム -->
+  <main class="page memo-editor-page">
+
+    <form method="post" 
+    action="{% if is_edit %}{{ url('memo_edit', memo.id) }}{% else %}{{ url('memo_register') }}{% endif %}" 
+    class="memo-form">
+      <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+
+      <!-- memo_register.html：操作ボタン -->
+      <div class="memo-editor-actions">
+        <button type="button" class="memo-edit-button" aria-label="編集">
+          <span class="material-symbols-outlined">edit_square</span>
+        </button>
+
+        <button type="reset" class="memo-delete-button" aria-label="内容を削除">
+          <span class="material-symbols-outlined">delete</span>
+        </button>
+      </div>
+
+      <!-- memo_register.html：エディター -->
+      <textarea
+        name="content"
+        class="memo-textarea"
+        placeholder="何買おうとしたのか忘れた。"
+        required
+      >{% if memo %}{{ memo.content }}{% endif %}</textarea>
+
+      <!-- memo_register.html：登録ボタン -->
+      <div class="memo-submit-area">
+        <button type="submit" class="memo-submit-button">
+          {% if is_edit %}更新{% else %}登録{% endif %}
+        </button>
+      </div>
+    </form>
+
+  </main>
+
+  <!-- memo_register.html：フッター -->
+  {% include 'components/tab.html' %}
+</body>
+</html>

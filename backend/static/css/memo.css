@@ -1,0 +1,315 @@
+/* =========================================================
+  memolist.html：メモ一覧ページ
+   ========================================================= */
+
+.memo-page {
+  background: var(--color-bg);
+}
+
+/* memolist.html：新規メモ作成ボタン */
+.memo-create-area {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 32px;
+}
+
+.memo-create-button {
+  width: 200px;
+  max-width: 100%;
+  min-height: 50px;
+  color: #ffffff;
+  background: var(--color-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.4rem;
+  letter-spacing: 0.08em;
+}
+
+.memo-create-button:hover {
+  opacity: 80%;
+}
+
+/* memolist.html：メモリスト */
+.memo-list {
+  background: #ffffff;
+}
+
+.memo-list-item {
+  min-height: 170px;
+  padding: 24px 18px;
+  background: #ffffff;
+  border-bottom: 5px solid var(--color-line);
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.memo-list-link {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 80px;
+  min-width: 0;
+}
+
+.memo-date {
+  width: 300px;
+  flex: 0 0 300px;
+  font-size: 2rem;
+  letter-spacing: 0.04em;
+}
+
+.memo-preview {
+  flex: 1;
+  font-size: 2.1rem;
+  line-height: 1.35;
+  word-break: break-word;
+}
+
+.memo-action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+/* memolist.html / memo_register.html / memo_detail.html：編集・削除ボタン */
+.memo-edit-button,
+.memo-delete-button {
+  width: 40px;
+  height: 30px;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.memo-edit-button {
+  background: var(--color-accent-soft);
+}
+
+.memo-delete-button {
+  background: var(--color-main);
+}
+
+.memo-edit-button:hover,
+.memo-delete-button:hover {
+  opacity: 80%;
+}
+
+.memo-edit-button .material-symbols-outlined,
+.memo-delete-button .material-symbols-outlined {
+  font-size: 3.2rem;
+}
+
+.empty-message {
+  margin: 0;
+  padding: 48px 24px;
+  color: var(--color-muted);
+  background: #ffffff;
+  font-size: 2rem;
+  text-align: center;
+}
+
+
+/* =========================================================
+  memo_register.html / memo_detail.html：メモ作成・詳細ページ
+   ========================================================= */
+
+.memo-editor-page {
+  background: var(--color-bg);
+}
+
+/* memo_register.html / memo_detail.html：操作ボタン */
+.memo-editor-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+/* memo_register.html：フォーム */
+.memo-form {
+  width: 100%;
+}
+
+/* memo_register.html：入力エリア */
+.memo-textarea {
+  width: 100%;
+  min-height: 1500px;
+  padding: 48px;
+  border: 0;
+  outline: 0;
+  resize: vertical;
+  color: var(--color-text);
+  background: #ffffff;
+  font-size: 2.1rem;
+  line-height: 1.8;
+}
+
+.memo-textarea::placeholder {
+  color: var(--color-muted);
+}
+
+/* memo_register.html：登録ボタン */
+.memo-submit-area {
+  margin-top: 72px;
+  display: flex;
+  justify-content: center;
+}
+
+.memo-submit-button {
+  width: 500px;
+  max-width: 100%;
+  min-height: 150px;
+  color: #ffffff;
+  background: var(--color-accent);
+  font-size: 2.8rem;
+  letter-spacing: 0.08em;
+}
+
+.memo-submit-button:hover {
+  opacity: 80%;
+}
+
+/* memo_detail.html：本文表示 */
+.memo-detail-box {
+  min-height: 1500px;
+  padding: 48px;
+  background: #ffffff;
+}
+
+.memo-detail-box p {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 2.1rem;
+  line-height: 1.8;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* =========================================================
+  スマホ向け
+   ========================================================= */
+
+@media (max-width: 767px) {
+
+  /* memolist.html */
+  .memo-create-area {
+    margin-bottom: 22px;
+  }
+
+  .memo-create-button {
+    width: 200px;
+    min-height: 50px;
+    font-size: 2.4rem;
+  }
+
+  .memo-list-item {
+    min-height: 98px;
+    padding: 14px 10px;
+    gap: 12px;
+  }
+
+  .memo-list-link {
+    gap: 22px;
+  }
+
+  .memo-date {
+    width: 120px;
+    flex-basis: 120px;
+    font-size: 1.45rem;
+  }
+
+  .memo-preview {
+    font-size: 1.65rem;
+  }
+
+  .memo-action-buttons {
+    gap: 10px;
+  }
+
+  .memo-edit-button,
+  .memo-delete-button {
+    width: 40px;
+    height: 30px;
+  }
+
+  .memo-edit-button .material-symbols-outlined,
+  .memo-delete-button .material-symbols-outlined {
+    font-size: 2.6rem;
+  }
+
+  /* memo_register.html / memo_detail.html */
+  .memo-editor-actions {
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  .memo-textarea {
+    min-height: 920px;
+    padding: 28px;
+    font-size: 1.7rem;
+  }
+
+  .memo-submit-area {
+    margin-top: 42px;
+  }
+
+  .memo-submit-button {
+    width: 260px;
+    min-height: 82px;
+    font-size: 2.4rem;
+  }
+
+  .memo-detail-box {
+    min-height: 920px;
+    padding: 28px;
+  }
+
+  .memo-detail-box p {
+    font-size: 1.7rem;
+  }
+}
+
+/* =========================================================
+  タブレット向け
+   ========================================================= */
+
+@media (min-width: 768px) {
+
+  .memo-create-button {
+    width: 200px;
+    min-height: 100px;
+    font-size: 2.4rem;
+  }
+
+  .memo-list-item {
+    min-height: 135px;
+  }
+
+  .memo-list-link {
+    gap: 48px;
+  }
+
+  .memo-date {
+    width: 230px;
+    flex-basis: 230px;
+  }
+
+  .memo-edit-button,
+  .memo-delete-button {
+      width: 50px;
+      height: 70px;
+  }
+
+  .memo-textarea,
+  .memo-detail-box {
+    min-height: 1100px;
+  }
+
+  .memo-submit-button {
+    width: 420px;
+    min-height: 118px;
+  }
+}

@@ -187,6 +187,16 @@ opacity: 80%;
   font-size: 4rem;
 }
 
+/* foodlist_detail.html：詳細画像 */
+.detail-image {
+  width: 280px;
+  height: 280px;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+  background: #ffffff;
+}
+
 @media (max-width: 767px) {
   .source-button-row {
     gap: 12px;
@@ -236,4 +246,9 @@ opacity: 80%;
     width: 240px;
     height: 76px;
   }
+  .detail-image {
+    width: 140px;
+    height: 140px;
+  }
+
 }

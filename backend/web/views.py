@@ -1,11 +1,13 @@
 from datetime import date
 
+from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.csrf import ensure_csrf_cookie
 
 from apps.foods.forms import FoodForm
 from apps.foods.models import Food, PreFood, FoodTemplate
+from apps.shopping_memos.models import ShoppingMemo
 from django.views.decorators.http import require_POST
 
 def top(request):
@@ -282,6 +284,98 @@ def delete_food(request, food_id):
         return redirect("home")
 
     return redirect("foodslist")
+
+@login_required
+def user_info(request):
+    food_count = Food.objects.filter(user=request.user).count()
+
+    return render(request, "user_info.html", {
+        "user": request.user,
+        "food_count": food_count,
+    })
+
+@login_required
+def user_logout(request):
+    if request.method == "POST":
+        logout(request)
+        return redirect("top")
+
+    return redirect("user_info")
+
+# メモリスト
+@login_required
+def memolist(request):
+    memos = ShoppingMemo.objects.filter(user=request.user)
+
+    return render(request, "memolist.html", {
+        "memos": memos,
+    })
+
+# メモ新規作成
+@login_required
+def memo_register(request):
+    if request.method == "POST":
+        content = request.POST.get("content")
+
+        if content:
+            ShoppingMemo.objects.create(
+                user=request.user,
+                content=content,
+            )
+
+        return redirect("memolist")
+
+    return render(request, "memo_register.html")
+
+# メモ詳細
+@login_required
+def memo_detail(request, memo_id):
+    memo = get_object_or_404(
+        ShoppingMemo,
+        id=memo_id,
+        user=request.user,
+    )
+
+    return render(request, "memo_detail.html", {
+        "memo": memo,
+    })
+
+# メモ削除
+@login_required
+def memo_delete(request, memo_id):
+    memo = get_object_or_404(
+        ShoppingMemo,
+        id=memo_id,
+        user=request.user,
+    )
+
+    if request.method == "POST":
+        memo.delete()
+
+    return redirect("memolist")
+
+# メモ更新
+@login_required
+def memo_edit(request, memo_id):
+    memo = get_object_or_404(
+        ShoppingMemo,
+        id=memo_id,
+        user=request.user,
+    )
+
+    if request.method == "POST":
+        content = request.POST.get("content")
+
+        if content:
+            memo.content = content
+            memo.save()
+
+        return redirect("memo_detail", memo_id=memo.id)
+
+    return render(request, "memo_register.html", {
+        "memo": memo,
+        "is_edit": True,
+    })
 
 # CSRFトークンを送るのに必要なCSRF Cookieを発行する処理
 @ensure_csrf_cookie
