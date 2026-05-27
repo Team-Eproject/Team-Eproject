@@ -1,13 +1,16 @@
-# from django.shortcuts import render
-
+from django.shortcuts import render
+from django.views.generic import CreateView
 from django_filters.rest_framework import DjangoFilterBackend
+from djangi.urls import reverse_lazy
+from .forms import FoodForm
 from rest_framework.generics import ListAPIView, CreateAPIView
 from .models import Food, PreFood, Message
 from .serializers import FoodSerializer, PreFoodSerializer
 
+from .services.gemini_service import generate_menu
 import json
 from google import genai
-
+import logging
 from django.conf import settings
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
@@ -19,9 +22,12 @@ class FoodListView(ListAPIView):
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ["category", "name"]
 
-class FoodCreateView(CreateAPIView):
+class FoodApiCreateView(CreateAPIView):
     queryset = Food.objects.all()
     serializer_class = FoodSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
 class CategoryListView(ListAPIView):
     queryset = PreFood.objects.all()
@@ -51,7 +57,8 @@ def ai_menu_process(request):
             },
             status=400,
         )
-    print(request_data)
+    logger = logging.getLogger(__name__)
+    logger.info(request_data)
 
     # ここでGemini処理
     ai_response =generate_menu(request_data)
@@ -59,7 +66,7 @@ def ai_menu_process(request):
     # 一時保存
     Message.objects.create(
         user=request.user,
-        content=str(ai_response.model_dump()),
+        content=ai_response.text,
         is_ai=True,
     )
 
@@ -109,6 +116,7 @@ class FoodCreateView(CreateView):
     template_name = "foods/food_form.html"
     success_url = reverse_lazy("foods:food-entry")
 
+    
     def form_valid(self, form):
         #追加(NOT NULLであってはならない違反対策)
         form.instance.user = self.request.user
