@@ -1,0 +1,23 @@
+{# components/tab.html : 全ページ共通タブバー #}
+<nav class="tab-bar" aria-label="メインメニュー">
+  <a class="tab-item {{ 'is-active' if active_tab == 'home' else '' }}" href="/home/">
+    <span class="material-symbols-outlined">home</span>
+    <span>ホーム</span>
+  </a>
+  <a class="tab-item {{ 'is-active' if active_tab == 'foods' else '' }}" href="/foods/">
+    <span class="material-symbols-outlined">kitchen</span>
+    <span>冷蔵庫</span>
+  </a>
+  <a class="tab-item {{ 'is-active' if active_tab == 'recipe' else '' }}" href="/recipe/">
+    <span class="material-symbols-outlined">restaurant_menu</span>
+    <span>レシピ提案</span>
+  </a>
+  <a class="tab-item {{ 'is-active' if active_tab == 'memo' else '' }}" href="/memos/">
+    <span class="material-symbols-outlined">edit_square</span>
+    <span>メモ</span>
+  </a>
+  <a class="tab-item {{ 'is-active' if active_tab == 'user' else '' }}" href="/user-info/">
+    <span class="material-symbols-outlined">person</span>
+    <span>登録情報</span>
+  </a>
+</nav>

@@ -46,8 +46,8 @@ loginForm.addEventListener("submit", async function (event) {
     if (response.ok) {
       messageArea.textContent = "ログインしました。";
 
-      // main.htmlのURLに合わせて変更
-      window.location.href = "/main/";
+      // home.htmlへ遷移
+      window.location.href = "/home/";
     } else {
       messageArea.textContent = data.error || "ログインに失敗しました。";
     }

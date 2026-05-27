@@ -119,6 +119,10 @@ button {
   letter-spacing: 0.18em;
 }
 
+.login-message{
+  color:#f5f5f5 ;
+}
+
 /* ========================================
   top.html：トップページ
 ======================================== */
@@ -313,7 +317,7 @@ button {
   }
 
   .top-logo {
-    width: 76%;
+    width: 100%;
   }
 
   .top-button-area {

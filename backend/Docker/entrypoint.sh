@@ -60,6 +60,9 @@ fi
 echo "📦 マイグレーションを開始します"
 python manage.py migrate --noinput
 
+echo "🌱 初期データを作成します"
+python manage.py seed_foods
+
 # -------------------------------------------------------------
 # 3. キャッシュテーブル作成
 # -------------------------------------------------------------
@@ -68,3 +71,42 @@ python manage.py createcachetable || true
 
 echo "🌐 Django 開発サーバーを起動します"
 python manage.py runserver 0.0.0.0:8000
+
+# -------------------------------------------------------------
+# スーパーユーザーの作成（初回のみ）
+# -------------------------------------------------------------
+if [ "${CREATE_SUPERUSER:-false}" = "true" ]; then
+  echo "👤 スーパーユーザーの登録を確認中、未登録なら自動作成します"
+  python manage.py shell <<PYCODE
+from django.contrib.auth import get_user_model
+import os
+
+User = get_user_model()
+username = os.environ.get('DJANGO_SUPERUSER_USERNAME', 'admin')
+email = os.environ.get('DJANGO_SUPERUSER_EMAIL', 'admin@example.com')
+password = os.environ.get('DJANGO_SUPERUSER_PASSWORD')
+
+if password and not User.objects.filter(username=username).exists():
+    User.objects.create_superuser(username=username, email=email, password=password)
+    print(f"✅ スーパーユーザー '{username}' 作成完了")
+elif not password:
+    print("⚠️  パスワードが設定されていません")
+else:
+    print(f"ℹ️  このスーパーユーザー '{username}' は既に登録されています")
+PYCODE
+fi
+
+# -------------------------------------------------------------
+# 静的ファイルの収集（S3へアップロード）本番時にコメント解除
+# -------------------------------------------------------------
+# echo "📁 静的ファイルを収集してS3にアップロード"
+# python manage.py collectstatic --noinput --clear
+
+# -------------------------------------------------------------
+# Gunicorn起動 本番時にコメント解除
+# -------------------------------------------------------------
+#echo "🎯 Gunicorn起動します"
+#exec gunicorn config.wsgi:application \
+#  --config /app/Docker/gunicorn.conf.py \
+#  --log-file - \
+#  --error-logfile - \
