@@ -11,8 +11,16 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 DEBUG = os.getenv("DEBUG", "1") == "1"
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+ALLOWED_HOSTS = os.getenv(
+    "ALLOWED_HOSTS",
+    "localhost,127.0.0.1"
+).split(",")
 
+# CSRFエラー防止設定
+CSRF_TRUSTED_ORIGINS = os.getenv(
+    "CSRF_TRUSTED_ORIGINS",
+    "http://localhost:8000"
+).split(",")
 
 # アプリ
 INSTALLED_APPS = [
@@ -25,6 +33,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
     'corsheaders',
+    "storages",
 
     # 自作
     "apps.users",
@@ -102,19 +111,46 @@ USE_I18N = True
 USE_TZ = False
 
 
+# Static / Media (本番用設定追記しました)
 # Static / Media
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / "static"]
-STATIC_ROOT = BASE_DIR / "staticfiles"
+USE_S3 = os.getenv("USE_S3", "0") == "1"
 
-MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / "media"
+if USE_S3:
+    AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
+    AWS_S3_REGION_NAME = os.getenv("AWS_S3_REGION_NAME", "ap-northeast-1")
+    AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com"
+
+    AWS_DEFAULT_ACL = None
+    AWS_QUERYSTRING_AUTH = False
+    AWS_S3_FILE_OVERWRITE = False
+
+    STORAGES = {
+        "default": {
+            "BACKEND": "config.storage_backends.MediaStorage",
+        },
+        "staticfiles": {
+            "BACKEND": "config.storage_backends.StaticStorage",
+        },
+    }
+
+    STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/static/"
+    MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/media/"
+
+else:
+    STATIC_URL = "/static/"
+    STATICFILES_DIRS = [BASE_DIR / "static"]
+    STATIC_ROOT = BASE_DIR / "staticfiles"
+
+    MEDIA_URL = "/media/"
+    MEDIA_ROOT = BASE_DIR / "media"
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.SessionAuthentication',
     ],
 }
+
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5500",
