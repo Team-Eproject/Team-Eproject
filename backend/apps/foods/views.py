@@ -1,19 +1,20 @@
 from django.shortcuts import render
 from django.views.generic import CreateView
 from django_filters.rest_framework import DjangoFilterBackend
-from djangi.urls import reverse_lazy
+from django.urls import reverse_lazy
 from .forms import FoodForm
 from rest_framework.generics import ListAPIView, CreateAPIView
 from .models import Food, PreFood, Message
 from .serializers import FoodSerializer, PreFoodSerializer
 
-from .services.gemini_service import generate_menu
 import json
 from google import genai
 import logging
 from django.conf import settings
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_exempt
+from .services import generate_menu
 
 class FoodListView(ListAPIView):
     queryset = Food.objects.select_related("category").all()
@@ -32,6 +33,20 @@ class FoodApiCreateView(CreateAPIView):
 class CategoryListView(ListAPIView):
     queryset = PreFood.objects.all()
     serializer_class = PreFoodSerializer
+
+#AIテスト用
+@csrf_exempt
+@require_POST
+def generate_menu_view(request):
+
+    prompt = "簡単な夕食"
+
+    result = generate_menu(prompt)
+
+    return JsonResponse(
+        {"result": result.model_dump()},
+        json_dumps_params={"ensure_ascii": False}
+    )
 
 #AIレシピ作成部分
 @require_POST
