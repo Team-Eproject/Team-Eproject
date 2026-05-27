@@ -29,7 +29,7 @@ INSTALLED_APPS = [
     # 自作
     "apps.users",
     "apps.foods",
-    # "apps.shopping_memos",
+    "apps.shopping_memos",
 ]
 
 # ミドルウェア
