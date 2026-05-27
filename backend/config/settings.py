@@ -184,68 +184,61 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
-
 # =========================================================
 # S3設定
 # =========================================================
 
-# USE_S3=1 のときだけS3を使う
-# 開発環境では0、本番環境では1にする想定
-USE_S3 = os.getenv("USE_S3", "0") == "1"
+# USE_S3=1 かつ DJANGO_ENV=production のときだけS3を使う
+# 開発環境でうっかりS3へ接続しないための安全装置
+USE_S3 = (
+    os.getenv("USE_S3", "0") == "1"
+    and os.getenv("DJANGO_ENV", "development") == "production"
+)
 
 if USE_S3:
     # S3バケット名
     AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
 
-    # AWSリージョン
+    # バケット名が未設定なら、わかりやすいエラーを出す
+    if not AWS_STORAGE_BUCKET_NAME:
+        raise ValueError("USE_S3=1 のため AWS_STORAGE_BUCKET_NAME が必要です。")
+
     AWS_S3_REGION_NAME = os.getenv("AWS_S3_REGION_NAME", "ap-northeast-1")
 
-    # S3のカスタムドメイン
-    # 例: your-bucket.s3.ap-northeast-1.amazonaws.com
     AWS_S3_CUSTOM_DOMAIN = os.getenv(
         "AWS_S3_CUSTOM_DOMAIN",
         f"{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com"
     )
 
-    # 署名付きURLを使わず、公開URLとして表示する設定
-    # バケットを非公開にする場合はCloudFront構成に変更する
     AWS_QUERYSTRING_AUTH = os.getenv("AWS_QUERYSTRING_AUTH", "0") == "1"
-
-    # ACLはS3側のバケットポリシー/IAMで管理する
     AWS_DEFAULT_ACL = None
-
-    # 同名ファイルが上書きされにくいようにする
     AWS_S3_FILE_OVERWRITE = False
 
-    # S3にアップロードしたstatic/mediaのURL
     STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/static/"
     MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/media/"
 
-    # Django 5.2系ではSTORAGESで保存先を指定する
     STORAGES = {
-        # ImageField/FileFieldの保存先
-        # Food.imageやFoodTemplate.imageがS3のmedia配下に保存される
         "default": {
             "BACKEND": "config.strage_backends.MediaStorage",
         },
-
-        # collectstaticで集めたCSS/JS/画像の保存先
         "staticfiles": {
             "BACKEND": "config.strage_backends.StaticStorage",
         },
     }
 
 else:
-    # 開発環境ではローカル保存
+    # 開発環境ではローカルのstatic/mediaを使う
+    STATIC_URL = "/static/"
+    MEDIA_URL = "/media/"
+
     STORAGES = {
         "default": {
-            "BACKEND": "config.storage_backends.MediaStorage",
+            "BACKEND": "django.core.files.storage.FileSystemStorage",
         },
         "staticfiles": {
-            "BACKEND": "config.storage_backends.StaticStorage",
+            "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
         },
     }
-
 
 # =========================================================
 # DRF設定
