@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>メモ詳細 | 飯蔵</title>
+
+  <!-- Material Symbols by Google -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+
+  <link rel="stylesheet" href="{{ static('css/base.css') }}">
+  <link rel="stylesheet" href="{{ static('css/tab.css') }}">
+  <link rel="stylesheet" href="{{ static('css/memo.css') }}">
+</head>
+
+<body>
+  {% set active_tab = 'memo' %}
+
+  <!-- memo_detail.html：ヘッダー -->
+  <header class="app-header header-with-close">
+    <h1>メモ詳細</h1>
+
+    <a class="close-button" href="{{ url('memolist') }}" aria-label="閉じる">
+      <span class="material-symbols-outlined">close</span>
+    </a>
+  </header>
+
+  <!-- memo_detail.html：メモ詳細 -->
+  <main class="page memo-editor-page">
+
+    <!-- memo_detail.html：操作ボタン -->
+    <div class="memo-editor-actions">
+      <a href="{{ url('memo_edit', memo.id) }}" class="memo-edit-button" aria-label="編集">
+        <span class="material-symbols-outlined">edit_square</span>
+      </a>
+
+      <form
+        method="post"
+        action="{{ url('memo_delete', memo.id) }}"
+        onsubmit="return confirm('このメモを削除しますか？');"
+      >
+        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+        <button type="submit" class="memo-delete-button" aria-label="削除">
+          <span class="material-symbols-outlined">delete</span>
+        </button>
+      </form>
+    </div>
+
+    <!-- memo_detail.html：本文表示 -->
+    <section class="memo-detail-box">
+      <p>
+        {{ memo.content }}
+      </p>
+    </section>
+
+  </main>
+
+  <!-- memo_detail.html：フッター -->
+  {% include 'components/tab.html' %}
+</body>
+</html>

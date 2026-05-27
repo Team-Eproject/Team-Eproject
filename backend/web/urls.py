@@ -15,4 +15,9 @@ urlpatterns = [
     path("foods/delete/<int:food_id>/", views.delete_food, name="delete_food"),
     path("user-info/", views.user_info, name="user_info"),
     path("logout/", views.user_logout, name="logout"),
+    path("memos/", views.memolist, name="memolist"),
+    path("memos/register/", views.memo_register, name="memo_register"),
+    path("memos/detail/<int:memo_id>/", views.memo_detail, name="memo_detail"),
+    path("memos/edit/<int:memo_id>/", views.memo_edit, name="memo_edit"),
+    path("memos/delete/<int:memo_id>/", views.memo_delete, name="memo_delete"),
 ]
