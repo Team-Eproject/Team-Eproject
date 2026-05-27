@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>食品登録 | 飯蔵</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="{{ static('css/base.css') }}">
+  <link rel="stylesheet" href="{{ static('css/tab.css') }}">
+  <link rel="stylesheet" href="{{ static('css/food-register.css') }}">
+</head>
+<body>
+  {% set active_tab = 'home' %}
+  <header class="app-header header-with-close">
+    <h1>食品登録</h1>
+    <a class="close-button" href="/home/" aria-label="閉じる"><span class="material-symbols-outlined">close</span></a>
+  </header>
+
+  <main class="register-page">
+    <form class="food-form" method="post" action="{{ url('food_register') }}" enctype="multipart/form-data">
+      <!-- CSRFトークン -->
+      <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+
+      <!-- 食品マスターから来た場合の template_id を保持 -->
+      {% if selected_template %}
+      <input type="hidden" name="template_id" value="{{ selected_template.id }}">
+      {% endif %}
+
+      <div class="source-button-row">
+        <a class="source-button" href="/foods/pre/">食品データから選ぶ</a>
+        <a class="source-button source-button-favorite" href="/foods/favorites/">お気に入りから選ぶ</a>
+      </div>
+
+<section class="form-food-basic">
+        <label class="image-upload-box">
+          {% if selected_template and selected_template.image %}
+            <img src="{{ selected_template.image.url }}" 
+            alt="{{ selected_template.name }}"
+            class="upload-preview-image"
+            >
+          {% else %}
+            <span class="material-symbols-outlined">image</span>
+          {% endif %}
+  
+    <input type="file" name="image" accept="image/*">
+  </label>
+          <div class="basic-inputs">
+            <label>食品名
+              <input 
+              id="food-name" 
+              type="text" 
+              name="name" 
+              autocomplete="off"
+              value="{{ selected_template.name if selected_template else '' }}"
+              >
+            </label>
+            <select id="food-category" name="category">
+              <option value="">カテゴリを選択</option>
+              {% for category in categories %}
+                <option value="{{ category.id }}"
+                {% if selected_template and selected_template.category.id == category.id %}selected{% endif %}
+                >
+                  {{ category.name }}
+                </option>
+              {% endfor %}
+            </select>
+          </div>
+</section>
+
+      <label class="form-label">数量</label>
+      <div class="quantity-row">
+        <button id="decrease-quantity" class="quantity-button minus" type="button"><span class="material-symbols-outlined">remove</span></button>
+        <input id="quantity-input" type="number" name="quantity" value="1" min="1">
+        <button id="increase-quantity" class="quantity-button plus" type="button"><span class="material-symbols-outlined">add</span></button>
+      </div>
+
+      <label class="form-label" for="expiry-date">賞味期限</label>
+      <input id="expiry-date" class="date-input" type="text" name="expiration_date" placeholder="xxxx年xx月xx日" autocomplete="off">
+
+      <!-- formエラーチェック用 -->
+      {% if form.errors %}
+        <div class="form-error-box">
+          <p>入力内容にエラーがあります</p>
+          <ul>
+            {% for field, errors in form.errors.items() %}
+              {% for error in errors %}
+                <li>{{ field }}：{{ error }}</li>
+              {% endfor %}
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+
+      <button class="submit-button" type="submit">登録</button>
+    </form>
+  </main>
+
+  {% include 'components/tab.html' %}
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.min.js"></script>
+  <script defer src="{{ static('js/common-ui.js') }}"></script>
+  <script defer src="{{ static('js/food-register.js') }}"></script>
+</body>
+</html>

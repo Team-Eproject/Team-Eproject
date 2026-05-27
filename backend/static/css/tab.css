@@ -1,0 +1,38 @@
+/* =========================================================
+  tab.css : 全ページ共通フッタータブバー
+  常駐UIなのでここだけ position: fixed を使用
+   ========================================================= */
+.tab-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+  height: 150px;
+  background: var(--color-accent-soft);
+  display: flex;
+  justify-content: center;
+}
+.tab-item {
+  width: 20%;
+  max-width: 190px;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 1.35rem;
+}
+.tab-item .material-symbols-outlined { font-size: 4rem; }
+.tab-item.is-active {
+  background: var(--color-accent-light);
+  border-bottom: 18px solid var(--color-main);
+}
+
+@media (max-width: 767px) {
+  .tab-bar { height: 84px; }
+  .tab-item { gap: 4px; font-size: 1.1rem; }
+  .tab-item .material-symbols-outlined { font-size: 3.2rem; }
+  .tab-item.is-active { border-bottom-width: 10px; }
+}

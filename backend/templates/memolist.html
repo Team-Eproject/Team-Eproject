@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>冷蔵庫メモ | 飯蔵</title>
+
+  <!-- Material Symbols by Google -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+
+  <link rel="stylesheet" href="{{ static('css/base.css') }}">
+  <link rel="stylesheet" href="{{ static('css/tab.css') }}">
+  <link rel="stylesheet" href="{{ static('css/memo.css') }}">
+</head>
+
+<body>
+  {% set active_tab = 'memo' %}
+
+  <!-- memolist.html：ヘッダー -->
+  <header class="app-header">
+    <h1>冷蔵庫メモ</h1>
+  </header>
+
+  <!-- memolist.html：メモ一覧 -->
+  <main class="page memo-page">
+
+    <!-- memolist.html：新規メモ作成ボタン -->
+    <section class="memo-create-area">
+      <a href="{{ url('memo_register') }}" class="memo-create-button">
+        メモ作成
+      </a>
+    </section>
+
+    <!-- memolist.html：メモリスト -->
+    <section class="memo-list">
+
+      {% for memo in memos %}
+      <article class="memo-list-item">
+
+        <a href="{{ url('memo_detail', memo.id) }}" class="memo-list-link">
+          <span class="memo-date">
+            {{ memo.created_at.strftime('%Y年%m月%d日') }}
+          </span>
+
+          <span class="memo-preview">
+            {{ memo.content[:15] }}{% if memo.content|length > 15 %}…{% endif %}
+          </span>
+        </a>
+
+        <div class="memo-action-buttons">
+          <a href="{{ url('memo_edit', memo.id) }}" class="memo-edit-button" aria-label="編集">
+            <span class="material-symbols-outlined">edit_square</span>
+          </a>
+
+          <form
+            method="post"
+            action="{{ url('memo_delete', memo.id) }}"
+            onsubmit="return confirm('このメモを削除しますか？');"
+          >
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+            <button type="submit" class="memo-delete-button" aria-label="削除">
+              <span class="material-symbols-outlined">delete</span>
+            </button>
+          </form>
+        </div>
+
+      </article>
+      {% else %}
+      <p class="empty-message">まだメモはありません</p>
+      {% endfor %}
+
+    </section>
+  </main>
+
+  <!-- memolist.html：フッター -->
+  {% include 'components/tab.html' %}
+</body>
+</html>
