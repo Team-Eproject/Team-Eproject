@@ -5,7 +5,7 @@
 
 ## 飯蔵について
 
-画像
+![screenshot](https://github.com/Team-Eproject/Team-Eproject/blob/frontend/kakano/image/docs/images/hanzo_logo.png)
 
 - 買ってきた食品を忘れてしまい冷蔵庫の奥に賞味期限が切れた〇〇が…
 - 買い物にきたけどあれ家にあったっけ？
