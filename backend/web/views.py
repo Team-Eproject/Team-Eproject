@@ -377,6 +377,72 @@ def memo_edit(request, memo_id):
         "is_edit": True,
     })
 
+# AIレシピ機能
+@login_required
+def recipe(request):
+    foods = (
+        Food.objects
+        .select_related("category")
+        .filter(user=request.user)
+        .order_by("expiration_date", "-created_at")
+    )
+
+    selected_foods = []
+    recipe_result = None
+    error_message = None
+
+    if request.method == "POST":
+        selected_ids = request.POST.getlist("food_ids")
+
+        if not selected_ids:
+            error_message = "食材を1つ以上選んでください。"
+        else:
+            selected_foods = list(
+                Food.objects
+                .filter(
+                    id__in=selected_ids,
+                    user=request.user,
+                )
+                .select_related("category")
+            )
+
+            food_names = [food.name for food in selected_foods]
+
+            # ここを後でAI API呼び出しに差し替える
+            recipe_result = generate_recipe_text(food_names)
+
+    return render(request, "recipe.html", {
+        "foods": foods,
+        "selected_foods": selected_foods,
+        "recipe_result": recipe_result,
+        "error_message": error_message,
+    })
+
+
+def generate_recipe_text(food_names):
+    """
+    1日実装用の仮レシピ生成。
+    後でバックエンド担当のAI処理に差し替える。
+    """
+    ingredients = "、".join(food_names)
+
+    return f"""
+おすすめレシピ：{ingredients}の簡単炒め
+
+【使う食材】
+{ingredients}
+
+【作り方】
+1. 食材を食べやすい大きさに切ります。
+2. フライパンで火の通りにくい食材から炒めます。
+3. 塩こしょう、しょうゆ、またはめんつゆで味付けします。
+4. 全体に火が通ったら完成です。
+
+【ポイント】
+賞味期限が近い食材から使うと、冷蔵庫の整理にもなります。
+"""
+
+
 # CSRFトークンを送るのに必要なCSRF Cookieを発行する処理
 @ensure_csrf_cookie
 def signup_view(request):

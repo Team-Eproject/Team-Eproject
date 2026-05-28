@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>レシピ提案 | 飯蔵</title>
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined">
+  <link rel="stylesheet" href="{{ static('css/base.css') }}">
+  <link rel="stylesheet" href="{{ static('css/tab.css') }}">
+  <link rel="stylesheet" href="{{ static('css/foods.css') }}">
+  <link rel="stylesheet" href="{{ static('css/recipe.css') }}">
+</head>
+
+<body>
+  {% set active_tab = 'recipe' %}
+
+  <header class="app-header">
+    <h1>レシピ提案</h1>
+  </header>
+
+  <main class="page recipe-page">
+
+    <section class="recipe-intro">
+      <h2>使いたい食材を選んでください</h2>
+      <p>冷蔵庫の中から食材を選ぶと、AIがレシピを提案します。</p>
+    </section>
+
+    {% if error_message %}
+      <div class="recipe-error">
+        {{ error_message }}
+      </div>
+    {% endif %}
+
+    <form method="post" action="{{ url('recipe') }}" class="recipe-form">
+      <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+
+      <section class="recipe-food-list">
+        {% for food in foods %}
+          <label class="recipe-food-item">
+            <input
+              type="checkbox"
+              name="food_ids"
+              value="{{ food.id }}"
+            >
+
+            {% if food.image %}
+              <img src="{{ food.image.url }}" alt="{{ food.name }}" class="recipe-food-image">
+            {% else %}
+              <span class="recipe-food-image-placeholder material-symbols-outlined">image</span>
+            {% endif %}
+
+            <span class="recipe-food-name">{{ food.name }}</span>
+            <span class="recipe-food-quantity">数量 {{ food.quantity }}</span>
+          </label>
+        {% else %}
+          <p class="empty-message">
+            登録済みの食品がありません。先に食品を登録してください。
+          </p>
+        {% endfor %}
+      </section>
+
+      <button type="submit" class="recipe-submit-button">
+        レシピを提案
+      </button>
+    </form>
+
+    {% if recipe_result %}
+      <section class="recipe-result">
+        <h2>提案レシピ</h2>
+
+        {% if selected_foods %}
+          <div class="selected-foods">
+            <strong>選んだ食材：</strong>
+            {% for food in selected_foods %}
+              <span>{{ food.name }}</span>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        <pre>{{ recipe_result }}</pre>
+      </section>
+    {% endif %}
+
+  </main>
+
+  {% include 'components/tab.html' %}
+</body>
+</html>
