@@ -87,11 +87,28 @@ class Food(models.Model):
     #更新日時
     updated_at = models.DateTimeField(auto_now=True)
     
-
-
     def __str__(self):
         return self.name
 
+#AIレシピのメッセージ
+class Message(models.Model):
+
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="ai_messages",
+    )    
+
+    content = models.TextField()
+
+    is_ai = models.BooleanField(default=False)
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.content[:30]
+   
 
 
     
