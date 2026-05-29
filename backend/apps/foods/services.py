@@ -4,8 +4,8 @@ from google import genai
 from .schemas import Menus
 from django.conf import settings
 
-def generate_menu():
-    pass
+# def generate_menu():
+#    pass
 
 def generate_menu(request_data):
     client = genai.Client(

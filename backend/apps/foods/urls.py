@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import FoodListView, FoodCreateView, CategoryListView, generate_menu_view
+from .views import FoodListView, FoodCreateView, CategoryListView
 
 
 
@@ -9,5 +9,6 @@ urlpatterns =  [
     path("foods/categories/", CategoryListView.as_view()),
     path("foods/entry/", FoodCreateView.as_view(), name="food-entry"),
     # path("register/", register_page),
-    path("generate/", generate_menu_view),
+    # 今回時間の関係でAPI方面は無しなのでコメントアウトします
+    # path("generate/", ai_menu_process),
 ]

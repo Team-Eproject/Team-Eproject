@@ -65,22 +65,51 @@
       </button>
     </form>
 
-    {% if recipe_result %}
-      <section class="recipe-result">
-        <h2>提案レシピ</h2>
+{% if recipe_result %}
+  <section class="recipe-result">
+    <h2>提案レシピ</h2>
 
-        {% if selected_foods %}
-          <div class="selected-foods">
-            <strong>選んだ食材：</strong>
-            {% for food in selected_foods %}
-              <span>{{ food.name }}</span>
-            {% endfor %}
-          </div>
-        {% endif %}
-
-        <pre>{{ recipe_result }}</pre>
-      </section>
+    {% if selected_foods %}
+      <div class="selected-foods">
+        <strong>選んだ食材：</strong>
+        {% for food in selected_foods %}
+          <span>{{ food.name }}</span>
+        {% endfor %}
+      </div>
     {% endif %}
+
+    {% for menu in recipe_result.menus %}
+      <article class="recipe-menu-card">
+        <h3>{{ menu.menuName }}</h3>
+
+        <p class="recipe-menu-meta">
+          {{ menu.servingCount }}人前 / 約{{ menu.cookingTimeMinutes }}分
+        </p>
+
+        <section class="recipe-menu-section">
+          <h4>材料</h4>
+          <ul>
+            {% for ingredient in menu.ingredients %}
+              <li>
+                {{ ingredient.name }}：
+                {{ ingredient.quantity }}{{ ingredient.unit }}
+              </li>
+            {% endfor %}
+          </ul>
+        </section>
+
+        <section class="recipe-menu-section">
+          <h4>作り方</h4>
+          <ol>
+            {% for step in menu.instructions %}
+              <li>{{ step }}</li>
+            {% endfor %}
+          </ol>
+        </section>
+      </article>
+    {% endfor %}
+  </section>
+{% endif %}
 
   </main>
 

@@ -8,6 +8,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from apps.foods.forms import FoodForm
 from apps.foods.models import Food, PreFood, FoodTemplate
 from apps.shopping_memos.models import ShoppingMemo
+from apps.foods.services import generate_menu
 from django.views.decorators.http import require_POST
 
 def top(request):
@@ -380,6 +381,8 @@ def memo_edit(request, memo_id):
 # AIレシピ機能
 @login_required
 def recipe(request):
+    today = date.today()
+
     foods = (
         Food.objects
         .select_related("category")
@@ -406,10 +409,32 @@ def recipe(request):
                 .select_related("category")
             )
 
-            food_names = [food.name for food in selected_foods]
+            request_data = []
 
-            # ここを後でAI API呼び出しに差し替える
-            recipe_result = generate_recipe_text(food_names)
+            for food in selected_foods:
+                if food.no_expiration_date or food.expiration_date is None:
+                    expiration_days = 9999
+                else:
+                    expiration_days = (food.expiration_date - today).days
+# 選択されたfoodをAIに渡しやすい形に変更
+                request_data.append({
+                    "name": food.name,
+                    "quantity": str(food.quantity),
+                    "unit": "個",
+                    "category": food.custom_category or food.category.name,
+                    "expiration_date": food.expiration_date.strftime("%Y-%m-%d") if food.expiration_date else None,
+                    "expiration_days": expiration_days,
+                })
+
+            try:
+                recipe_result = generate_menu(request_data)
+
+                if recipe_result is None:
+                    error_message = "AIレシピの生成に失敗しました。時間をおいて再度お試しください。"
+
+            except Exception as e:
+                print(f"AI recipe error: {e}")
+                error_message = "AIレシピの生成中にエラーが発生しました。"
 
     return render(request, "recipe.html", {
         "foods": foods,
@@ -417,30 +442,6 @@ def recipe(request):
         "recipe_result": recipe_result,
         "error_message": error_message,
     })
-
-
-def generate_recipe_text(food_names):
-    """
-    1日実装用の仮レシピ生成。
-    後でバックエンド担当のAI処理に差し替える。
-    """
-    ingredients = "、".join(food_names)
-
-    return f"""
-おすすめレシピ：{ingredients}の簡単炒め
-
-【使う食材】
-{ingredients}
-
-【作り方】
-1. 食材を食べやすい大きさに切ります。
-2. フライパンで火の通りにくい食材から炒めます。
-3. 塩こしょう、しょうゆ、またはめんつゆで味付けします。
-4. 全体に火が通ったら完成です。
-
-【ポイント】
-賞味期限が近い食材から使うと、冷蔵庫の整理にもなります。
-"""
 
 
 # CSRFトークンを送るのに必要なCSRF Cookieを発行する処理

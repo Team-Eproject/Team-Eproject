@@ -143,6 +143,49 @@
   font-family: inherit;
 }
 
+/* AIレシピ結果カード */
+.recipe-menu-card {
+  margin-top: 28px;
+  padding: 24px;
+  background: #ffffff;
+  border: 2px solid var(--color-accent-light);
+}
+
+.recipe-menu-card h3 {
+  margin: 0 0 12px;
+  color: var(--color-main);
+  font-size: 2.2rem;
+  font-weight: 600;
+}
+
+.recipe-menu-meta {
+  margin: 0 0 20px;
+  color: #333333;
+  font-size: 1.5rem;
+}
+
+.recipe-menu-section {
+  margin-top: 20px;
+}
+
+.recipe-menu-section h4 {
+  margin: 0 0 10px;
+  color: var(--color-main);
+  font-size: 1.7rem;
+}
+
+.recipe-menu-section ul,
+.recipe-menu-section ol {
+  margin: 0;
+  padding-left: 1.5em;
+  font-size: 1.5rem;
+  line-height: 1.8;
+}
+
+.recipe-menu-section li {
+  margin-bottom: 6px;
+}
+
 @media (max-width: 767px) {
   .recipe-intro h2 {
     font-size: 2rem;
@@ -173,5 +216,19 @@
     width: 240px;
     min-height: 72px;
     font-size: 1.8rem;
+  }
+
+    .recipe-menu-card {
+    padding: 18px;
+  }
+
+  .recipe-menu-card h3 {
+    font-size: 1.9rem;
+  }
+
+  .recipe-menu-meta,
+  .recipe-menu-section ul,
+  .recipe-menu-section ol {
+    font-size: 1.4rem;
   }
 }
