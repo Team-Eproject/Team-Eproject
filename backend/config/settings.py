@@ -23,7 +23,7 @@ DJANGO_ENV = os.getenv("DJANGO_ENV", "development")
 # 例: ALLOWED_HOSTS=localhost,127.0.0.1,example.com
 ALLOWED_HOSTS = os.getenv(
     "ALLOWED_HOSTS",
-    "localhost,127.0.0.1"
+    "localhost,127.0.0.1",
 ).split(",")
 
 # 主キーのデフォルト型
