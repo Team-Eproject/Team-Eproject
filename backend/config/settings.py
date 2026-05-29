@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -22,8 +23,8 @@ DJANGO_ENV = os.getenv("DJANGO_ENV", "development")
 # カンマ区切りで複数のホストを.envから受け取る
 # 例: ALLOWED_HOSTS=localhost,127.0.0.1,example.com
 ALLOWED_HOSTS = os.getenv(
-    "ALLOWED_HOSTS",
-    "localhost,127.0.0.1",
+"ALLOWED_HOSTS",
+"localhost,127.0.0.1",
 ).split(",")
 
 # 主キーのデフォルト型
@@ -251,6 +252,15 @@ REST_FRAMEWORK = {
     ],
 }
 
+CORS_ALLOWED_ORIGINS = [
+    "http://127.0.0.1:5500",
+    "http://localhost:5500",
+]
+
+#GeminiAPI
+load_dotenv()
+
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 # =========================================================
 # CORS / CSRF設定

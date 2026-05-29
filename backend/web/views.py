@@ -8,6 +8,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from apps.foods.forms import FoodForm
 from apps.foods.models import Food, PreFood, FoodTemplate
 from apps.shopping_memos.models import ShoppingMemo
+from apps.foods.services import generate_menu
 from django.views.decorators.http import require_POST
 
 def top(request):
@@ -376,6 +377,72 @@ def memo_edit(request, memo_id):
         "memo": memo,
         "is_edit": True,
     })
+
+# AIレシピ機能
+@login_required
+def recipe(request):
+    today = date.today()
+
+    foods = (
+        Food.objects
+        .select_related("category")
+        .filter(user=request.user)
+        .order_by("expiration_date", "-created_at")
+    )
+
+    selected_foods = []
+    recipe_result = None
+    error_message = None
+
+    if request.method == "POST":
+        selected_ids = request.POST.getlist("food_ids")
+
+        if not selected_ids:
+            error_message = "食材を1つ以上選んでください。"
+        else:
+            selected_foods = list(
+                Food.objects
+                .filter(
+                    id__in=selected_ids,
+                    user=request.user,
+                )
+                .select_related("category")
+            )
+
+            request_data = []
+
+            for food in selected_foods:
+                if food.no_expiration_date or food.expiration_date is None:
+                    expiration_days = 9999
+                else:
+                    expiration_days = (food.expiration_date - today).days
+# 選択されたfoodをAIに渡しやすい形に変更
+                request_data.append({
+                    "name": food.name,
+                    "quantity": str(food.quantity),
+                    "unit": "個",
+                    "category": food.custom_category or food.category.name,
+                    "expiration_date": food.expiration_date.strftime("%Y-%m-%d") if food.expiration_date else None,
+                    "expiration_days": expiration_days,
+                })
+
+            try:
+                recipe_result = generate_menu(request_data)
+
+                if recipe_result is None:
+                    error_message = "AIレシピの生成に失敗しました。時間をおいて再度お試しください。"
+
+            except Exception as e:
+                print(f"AI recipe error: {e}")
+                error_message = "AIレシピの生成中にエラーが発生しました。"
+
+    return render(request, "recipe.html", {
+        "foods": foods,
+        "selected_foods": selected_foods,
+        "recipe_result": recipe_result,
+        "error_message": error_message,
+    })
+
 
 # CSRFトークンを送るのに必要なCSRF Cookieを発行する処理
 @ensure_csrf_cookie
