@@ -25,6 +25,7 @@ DJANGO_ENV = os.getenv("DJANGO_ENV", "development")
 ALLOWED_HOSTS = os.getenv(
     "ALLOWED_HOSTS",
     "localhost,127.0.0.1"
+    "hanzou-app.com"
 ).split(",")
 
 # 主キーのデフォルト型
